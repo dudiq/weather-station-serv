@@ -1,6 +1,6 @@
 #pragma once
 
-#define BATT_PIN 36
+#include "enum.h"
 
 class ModBattery
 {

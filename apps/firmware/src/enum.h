@@ -1,5 +1,7 @@
 #pragma once
 
+#include "pins.h"
+
 // #define GxEPD_WHITE 0xFF
 // #define GxEPD_BLACK 0x00
 // #define GRAY 0x88
