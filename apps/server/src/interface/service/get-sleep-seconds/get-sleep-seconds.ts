@@ -15,7 +15,7 @@ addLastHour()
 // wakeup 4 -> 8 // Math.max
 // wakeup 23 -> 5
 
-export function getNextWakeupTimeout(): number {
+export function getSleepSeconds(): number {
   const now = new Date()
   const currentHour = now.getHours()
   const currentMinutes = now.getMinutes()

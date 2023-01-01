@@ -14,7 +14,7 @@
 #define BUTTON_2  (35)
 #define BUTTON_3  (39)
 
-#define BATT_PIN  (36)
+#define BATT_PIN  (35)
 
 #define SD_MISO   (12)
 #define SD_MOSI   (13)

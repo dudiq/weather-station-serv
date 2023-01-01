@@ -130,22 +130,6 @@ public:
         this->displayEpd->drawString(0, 540, "540", LEFT);
         this->displayEpd->drawHLine(0, 540, 960, Black);
     }
-
-    void drawGrid()
-    {
-        //    ModDisplayEpd *disp = this->displayEpd;
-        // // two lines each for double thickness
-
-        this->displayEpd->drawVLine(480, 0, 540, Black);
-        this->displayEpd->drawVLine(481, 0, 540, Black);
-
-        this->displayEpd->drawHLine(480, 135, 480, Black);
-        this->displayEpd->drawHLine(480, 136, 480, Black);
-        this->displayEpd->drawHLine(480, 270, 480, Black);
-        this->displayEpd->drawHLine(480, 271, 480, Black);
-        this->displayEpd->drawHLine(480, 405, 480, Black);
-        this->displayEpd->drawHLine(480, 406, 480, Black);
-    }
 };
 
 ModDrawing::ModDrawing(ModDisplayEpd *display)

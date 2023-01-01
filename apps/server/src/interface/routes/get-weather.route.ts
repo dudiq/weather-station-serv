@@ -1,9 +1,9 @@
 import type { IncomingMessage, ServerResponse } from 'http'
 import { isErr } from '@local-weather/result'
-import { renderBlock } from '../ui/render.block'
+import { renderBlock } from '../../ui/render.block'
 import { getWeatherAdapter } from '../../infra/adapter/weather.adapter'
 import { serverAnswer } from '../../infra/service/server-answer'
-import { getNextWakeupTimeout } from '../service/get-next-wakeup-timeout'
+import { getSleepSeconds } from '../service/get-sleep-seconds/get-sleep-seconds'
 import type { DeviceResultRequest } from '../../core/device/device-result-request'
 
 export async function getWeatherRoute(
@@ -35,7 +35,7 @@ export async function getWeatherRoute(
 
   // should be less 64kb
   const result: DeviceResultRequest = {
-    sleepSeconds: getNextWakeupTimeout(),
+    sleepSeconds: getSleepSeconds(),
     isDev: false,
     blocks: {
       total: renderResult.data.length,

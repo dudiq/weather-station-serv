@@ -1,5 +1,5 @@
 import type { BlockProps, BlockResult } from '../types'
-import { getMeteoIcon } from '../../service/get-meteo-icon'
+import { getMeteoIcon } from '../../interface/service/get-meteo-icon'
 
 export function currentSection({ current }: BlockProps): BlockResult {
   return [

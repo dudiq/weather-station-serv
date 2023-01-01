@@ -1,6 +1,6 @@
 import type { BlockProps, BlockResult } from '../../types'
-import { getMeteoIcon } from '../../../service/get-meteo-icon'
-import { formatDate } from '../../../service/format-date'
+import { getMeteoIcon } from '../../../interface/service/get-meteo-icon'
+import { formatDate } from '../../../interface/service/format-date'
 
 const x = 40
 const y = 321
@@ -34,7 +34,7 @@ export function forecastBlock({ forecast }: BlockProps): BlockResult {
         {
           type: 'text',
           x: x + index * dx + 110,
-          y: y + 30,
+          y: y + 35,
           font: 't-lg',
           align: 'LEFT',
           text: `${Math.floor(item.temp.max)}°`,

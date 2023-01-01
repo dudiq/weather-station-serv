@@ -1,5 +1,5 @@
-import { formatDate } from '../../service/format-date'
-import type { DeviceItem } from '../../../core/device/device-result-request'
+import { formatDate } from '../../interface/service/format-date'
+import type { DeviceItem } from '../../core/device/device-result-request'
 
 export function datetimeSection(): DeviceItem[] {
   return [

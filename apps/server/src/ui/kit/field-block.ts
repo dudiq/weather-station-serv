@@ -24,7 +24,7 @@ export function fieldBlock({ label, value, x, y }: Args): BlockResult {
       x: x + 10,
       y: y - 10,
       font: 't-md',
-      text: value,
+      text: `${value}`,
       align: 'LEFT',
     },
   ]
