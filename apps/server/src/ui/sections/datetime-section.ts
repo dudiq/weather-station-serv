@@ -5,8 +5,8 @@ export function datetimeSection(): DeviceItem[] {
   return [
     {
       type: 'text',
-      x: 22,
-      y: 490,
+      x: 5,
+      y: 5,
       font: 't-md',
       align: 'LEFT',
       text: formatDate(new Date(), 'HH:mm | eee, dd MMM'),

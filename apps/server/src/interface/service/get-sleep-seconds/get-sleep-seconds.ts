@@ -1,33 +1,25 @@
 const HOUR_SECONDS = 60 * 60
-const DEFAULT_WAKE_UP_SECONDS = HOUR_SECONDS * 2
 
 const wakeupHoursByDay = [5, 11, 14, 17, 22]
 
-function addLastHour(): void {
+function getHoursList(): number[] {
   const lastHour = wakeupHoursByDay[wakeupHoursByDay.length - 1]
   const nextHour = lastHour + wakeupHoursByDay[0] + (24 - lastHour)
-  wakeupHoursByDay.push(nextHour)
+  const res = [...wakeupHoursByDay]
+  res.push(nextHour)
+  return res
 }
 
-addLastHour()
+const usedHoursList = getHoursList()
 
-// wakeup 3 -> 5
-// wakeup 4 -> 8 // Math.max
-// wakeup 23 -> 5
-
-export function getSleepSeconds(): number {
-  const now = new Date()
-  const currentHour = now.getHours()
-  const currentMinutes = now.getMinutes()
+export function getSleepSeconds(currentDate: Date): number {
+  const currentHour = currentDate.getHours()
+  const currentMinutes = currentDate.getMinutes()
   const nextHour =
-    wakeupHoursByDay.find((hour) => currentHour < hour) || currentHour
+    usedHoursList.find((hour) => currentHour < hour) || currentHour
 
   const dxHour =
-    nextHour * HOUR_SECONDS - currentHour * HOUR_SECONDS + currentMinutes * 60
+    nextHour * HOUR_SECONDS - (currentHour * HOUR_SECONDS + currentMinutes * 60)
 
-  const usedValue = Math.max(dxHour, DEFAULT_WAKE_UP_SECONDS)
-
-  // get current date
-  // switch by current date
-  return usedValue
+  return dxHour
 }

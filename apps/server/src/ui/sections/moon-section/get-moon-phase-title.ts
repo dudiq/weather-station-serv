@@ -28,6 +28,6 @@ const localeMap: Record<string, LangPack> = {
   ru: ruLocal,
 }
 export function getMoonPhaseTitle(value: MoonPhaseEntity): string {
-  const usedLocale = localeMap[process.env.WX_LOCALE] || localeMap.en
+  const usedLocale = localeMap[process.env.WX_LOCALE || 'en'] || localeMap.en
   return usedLocale[value]
 }

@@ -56,6 +56,7 @@ function initEnv(): void {
   console.log(`[env] using WX_HOST: ${process.env.WX_HOST}`)
   console.log(`[env] using WX_PORT: ${process.env.WX_PORT}`)
   console.log(`[env] using WX_PLACE: ${process.env.WX_PLACE}`)
+  console.log(`[env] using WX_LOCALE: ${process.env.WX_LOCALE}`)
   console.log(`[env] using folder: ${path.resolve(usedFolder)}`)
   console.log('[env] -----------------')
 }
