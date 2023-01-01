@@ -1,0 +1,48 @@
+import type { WeatherNameEntity } from '../../../../core/entities/weather-name.entity'
+
+const accuMeteoWeather: Record<number, WeatherNameEntity> = {
+  1: 'sunny',
+  2: 'sunny',
+  3: 'sun-cloudy',
+  4: 'sun-cloudy',
+  5: 'sun-cloudy',
+  6: 'sun-cloudy',
+  7: 'cloudy-overcast',
+  8: 'cloudy-overcast',
+  11: 'fog',
+  12: 'shower',
+  13: 'shower',
+  14: 'shower',
+  15: 'storm',
+  16: 'storm-cloudy',
+  17: 'storm-cloudy',
+  18: 'rain',
+  19: 'flurries',
+  20: 'flurries',
+  21: 'flurries',
+  22: 'snow',
+  23: 'snow',
+  24: 'temper',
+  25: 'sleet',
+  26: 'sleet',
+  29: 'sleet',
+  30: 'temper',
+  31: 'temper',
+  32: 'windy',
+  33: 'moon',
+  34: 'moon',
+  35: 'moon-cloudy',
+  36: 'moon-cloudy',
+  37: 'moon-cloudy',
+  38: 'moon-cloudy',
+  39: 'night-shower',
+  40: 'night-rain',
+  41: 'night-storm',
+  42: 'night-storm',
+  43: 'night-flurries',
+  44: 'night-snow',
+}
+
+export function getWeatherKey(value: number): WeatherNameEntity {
+  return accuMeteoWeather[value] || 'not-available'
+}

@@ -1,0 +1,37 @@
+{
+  "name": "local-weather",
+  "version": "0.0.1",
+  "private": true,
+  "packageManager": "yarn@1.22.18",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "clean:dist": "turbo run clean:dist",
+    "clean:node_modules": "turbo run clean:node_modules",
+    "check-types": "turbo run check-types",
+    "build": "turbo run build check-types",
+    "dev": "turbo run dev --parallel",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "prepare": "husky install",
+    "lint-staged": "lint-staged"
+  },
+  "devDependencies": {
+    "rimraf": "^3.0.2",
+    "husky": "^8.0.2",
+    "lint-staged": "^13.1.0",
+    "patch-package": "^6.5.0",
+    "prettier": "^2.8.1",
+    "storybook-css-modules-preset": "^1.1.1",
+    "tailwindcss": "^3.2.4",
+    "turbo": "^1.6.3"
+  },
+  "engines": {
+    "npm": ">=7.0.0",
+    "node": ">=14.0.0"
+  },
+  "dependencies": {}
+}
