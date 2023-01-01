@@ -12,6 +12,9 @@ build
 _build
 dist
 fonts/dist
+debug.cfg
+debuc_customr.json
+esp32.svd
 
 # misc
 .DS_Store
