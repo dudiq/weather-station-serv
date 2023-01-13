@@ -32,7 +32,7 @@
 #include "config.h"
 
 WiFiClient wifiClient;   // wifi client object
-  
+
 ModWifi modWifi;
 ModDisplayEpd modDisplayEpd;
 ModBattery modBattery;
@@ -48,7 +48,7 @@ void setup()
   // delay needed for correct start device
   delay(1000);
   Serial.println("starting...");
-  
+
   modDisplayEpd.prepareBuffer();
 
   bool isConnected = modWifi.connect(WX_WIFI_SSID, WX_WIFI_PWD);
@@ -58,7 +58,7 @@ void setup()
     gotoSleep(WX_IMMEDIATE_SLEEP_SECONDS);
     return;
   }
-  
+
   if (!handleRequestWeather()) {
     // TODO: add redraw screen and make next request after 20 min
     Serial.println("Cannot observer new data from server, going to sleep");
@@ -71,22 +71,22 @@ void setup()
 
   if (!WX_IS_DEV) {
     DynamicJsonDocument json = modRequest.getJson();
-    uint64_t sleepSeconds = json["sleepSeconds"].as<int>();  
+    uint64_t sleepSeconds = json["sleepSeconds"].as<int>();
     gotoSleep(sleepSeconds);// 2 hours
-  }  
+  }
 }
 
 void loopDev() {
   modDisplayEpd.prepareBuffer();
   DynamicJsonDocument json = modRequest.getJson();
-  uint64_t sleepSeconds = json["devSleep"].as<int>();  
+  uint64_t sleepSeconds = json["devSleep"].as<int>();
 
   delay(sleepSeconds);
-  
+
   if (!handleRequestWeather()) {
     // TODO: add redraw screen and make next request after 20 min
     Serial.println("Cannot observer new data from server, going to sleep");
-    modDrawing.drawFetchError();    
+    modDrawing.drawFetchError();
     return;
   }
   processResults();
@@ -94,39 +94,39 @@ void loopDev() {
 
 void processResults() {
   sectionStatusBar.drawStatusBar(600, 20);
-    
+
   Serial.println("-draw json");
   DynamicJsonDocument json = modRequest.getJson();
   modDrawing.drawJson(json);
 
-  bool isDev = json["isDev"].as<bool>();  
+  bool isDev = json["isDev"].as<bool>();
   if (isDev) {
     WX_IS_DEV = true;
   }
-  
+
   if (WX_IS_DEV) {
     modDrawing.drawDevGrid();
   }
 
   Serial.println("-draw buffer");
-  modDisplayEpd.drawBuffer(); 
+  modDisplayEpd.drawBuffer();
 }
 
 void loop(){
   if (WX_IS_DEV) {
     loopDev();
-  }  
+  }
 }
 
-bool handleRequestWeather() {  
+bool handleRequestWeather() {
   bool isFetched = false;
   int ticks = 0;
   while (!isFetched && (ticks < WX_MAX_REQUEST_TICK))
   {
     ticks++;
-    Serial.print(".");    
+    Serial.print(".");
     delay(200);
-    isFetched = modRequest.fetchRequest(wifiClient);  
+    isFetched = modRequest.fetchRequest(wifiClient);
   }
 
   if (!isFetched) {

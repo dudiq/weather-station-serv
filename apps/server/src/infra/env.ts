@@ -10,7 +10,7 @@ const dotenv = require('dotenv')
 const dotenvExpand = require('dotenv-expand').expand
 
 const allPath = [
-  { file: '.env.development.local', type: 'dev' },
+  { file: '.env.development.local', type: 'local' },
   { file: '.env.development', type: 'dev' },
   { file: '.env.local', type: 'prod' },
   { file: '.env', type: 'prod' },
