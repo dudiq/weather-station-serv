@@ -27,7 +27,7 @@ export function detailsSection({ current }: BlockProps): BlockResult {
     }),
     ...fieldBlock({
       label: 'ветер:',
-      value: `${current.wind.speed} м/с`, // todo add direction
+      value: `${Math.floor(current.wind.speed * 10) / 10} м/с`, // todo add direction
       x,
       y: y + dx * 3,
     }),
