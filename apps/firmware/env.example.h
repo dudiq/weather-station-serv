@@ -11,6 +11,6 @@ const int WX_MAX_REQUEST_TICK = 2;
 
 const int MAX_WIFI_CONNECT_TICKS = 50;
 
-//const bool WX_IS_DEV = false;
+bool WX_IS_DEV = false;
 
-String WX_API_TOKEN = 'token';
+String WX_API_TOKEN = "token";

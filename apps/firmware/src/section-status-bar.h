@@ -17,8 +17,8 @@ public:
     {
         Serial.println("-status bar draw start");
         // get data
-        float voltage = this->battery->voltage();
-        uint8_t voltagePercent = this->battery->percent(voltage);
+        float voltage = this->battery->currentVoltage;
+        uint8_t voltagePercent = this->battery->currentPercent;
         int wifiSignal = this->wifi->wifiSignal();
 
         Serial.println("voltage:" + String(voltage));
@@ -54,17 +54,12 @@ public:
     {
         if (voltage < 1)
             return;
-        this->displayEpd->setFont("textSm");
+        this->displayEpd->setFont("t-sm");
 
         this->displayEpd->drawRect(x + 25, y - 14, 40, 15, Black);
         this->displayEpd->fillRect(x + 65, y - 10, 4, 7, Black);
         this->displayEpd->fillRect(x + 27, y - 12, 36 * percentage / 100.0, 11, Black);
         this->displayEpd->drawString(x + 80, y - 12 , String(percentage) + "%  " + String(voltage, 1) + "v", LEFT);
-
-        if (percentage < 15>) {
-          this->displayEpd->setFont("textXl");
-          this->displayEpd->drawString(350, 210 , "NEED CHARGE!!!", LEFT);
-        }
     }
 };
 

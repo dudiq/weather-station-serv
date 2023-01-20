@@ -11,12 +11,30 @@ private:
 public:
     ModDrawing(ModDisplayEpd *displayEpd);
 
+    void drawNeedCharge() {
+        this->displayEpd->setFont("t-md");
+        this->displayEpd->drawString(50, 210 , "Need to charge =(", LEFT);
+        this->displayEpd->drawBuffer(); 
+
+        Serial.println("Need charge");
+    }
+
     void drawNotConnected()
     {
+        this->displayEpd->setFont("t-md");
+        this->displayEpd->drawString(50, 210 , "WIFI Connection lost =(", LEFT);
+        this->displayEpd->drawBuffer(); 
+
+        Serial.println("Not connected to WIFI");
     }
 
     void drawFetchError()
     {
+        this->displayEpd->setFont("t-md");
+        this->displayEpd->drawString(50, 210 , "Fetch error from server =(", LEFT);
+        this->displayEpd->drawBuffer(); 
+
+        Serial.println("Fetch error from server");
     }
 
     uint8_t getColor(String color)

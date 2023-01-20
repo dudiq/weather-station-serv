@@ -40,6 +40,9 @@ ModRequest modRequest;
 ModDrawing modDrawing(&modDisplayEpd);
 SectionStatusBar sectionStatusBar(&modDisplayEpd, &modBattery, &modWifi);
 
+const int MIN_BATTERY_PERCENTAGE = 15;
+const uint64_t DEEP_SLEEP_TIME = 60 * 60 * 24 * 100;
+
 void setup()
 {
   Serial.begin(115200);
@@ -48,8 +51,20 @@ void setup()
   // delay needed for correct start device
   delay(1000);
   Serial.println("starting...");
-  
+
+
   modDisplayEpd.prepareBuffer();
+
+  modBattery.readVoltage();
+  float percentage = modBattery.currentPercent;
+  
+  Serial.println("percentage:" + String(percentage));
+  if (percentage < MIN_BATTERY_PERCENTAGE) {
+    modDrawing.drawNeedCharge();
+    gotoSleep(DEEP_SLEEP_TIME);
+    return;
+  }
+
 
   bool isConnected = modWifi.connect(WX_WIFI_SSID, WX_WIFI_PWD);
   if (!isConnected) {
