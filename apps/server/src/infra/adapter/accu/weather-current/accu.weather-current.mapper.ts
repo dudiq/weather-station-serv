@@ -2,7 +2,7 @@ import type { WeatherValueObject } from '../../../../core/value-objects/weather.
 import { getTendencyPressure } from '../units/get-tendency-pressure'
 import { getMeterDistanceValue } from '../units/get-meter-distance-value'
 import { getMgMercury } from '../units/get-mg-mercury'
-import { getMetersPerSecondToKmPerHour } from '../units/get-meters-per-second-to-km-per-hour'
+import { getSpeed } from '../units/get-speed'
 import { getWeatherKey } from '../units/get-weather-key'
 
 export function accuWeatherCurrentMapper(node: any): WeatherValueObject {
@@ -22,13 +22,15 @@ export function accuWeatherCurrentMapper(node: any): WeatherValueObject {
     dewPoint: Number(node.DewPoint.Metric.Value),
     wind: {
       degrees: Number(node.Wind.Direction.Degrees),
-      speed: getMetersPerSecondToKmPerHour(
+      speed: getSpeed(
         Number(node.Wind.Speed.Metric.Value),
-        Number(node.Wind.Speed.Metric.UnitType)
+        Number(node.Wind.Speed.Metric.UnitType),
+        'ms'
       ),
-      gustSpeed: getMetersPerSecondToKmPerHour(
+      gustSpeed: getSpeed(
         Number(node.WindGust.Speed.Metric.Value),
-        Number(node.WindGust.Speed.Metric.UnitType)
+        Number(node.WindGust.Speed.Metric.UnitType),
+        'ms'
       ),
     },
     uvindex: Number(node.UVIndex),

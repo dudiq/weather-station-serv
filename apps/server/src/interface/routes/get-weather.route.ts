@@ -6,6 +6,8 @@ import { serverAnswer } from '../../infra/service/server-answer'
 import { getSleepSeconds } from '../service/get-sleep-seconds'
 import type { DeviceResultRequest } from '../../core/device/device-result-request'
 
+const WAKEUP_HOURS = [5, 8, 11, 14, 17, 20, 23]
+
 export async function getWeatherRoute(
   req: IncomingMessage,
   res: ServerResponse
@@ -35,7 +37,7 @@ export async function getWeatherRoute(
 
   // should be less 64kb
   const result: DeviceResultRequest = {
-    sleepSeconds: getSleepSeconds(new Date()),
+    sleepSeconds: getSleepSeconds(new Date(), WAKEUP_HOURS),
     isDev: false,
     blocks: {
       total: renderResult.data.length,

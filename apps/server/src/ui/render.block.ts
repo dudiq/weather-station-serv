@@ -13,7 +13,7 @@ export async function renderBlock({
   current,
   forecast,
 }: BlockProps): PromiseResult<BlockResult> {
-  console.log('current', current)
+  // console.log('current', current)
 
   const res = resultOk<DeviceItem[]>([
     ...datetimeSection(),

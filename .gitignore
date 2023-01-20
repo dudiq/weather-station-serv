@@ -38,3 +38,4 @@ env.h
 env.*.local
 
 *.example.ts
+*.cache.json
