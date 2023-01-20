@@ -1,8 +1,6 @@
 const HOUR_SECONDS = 60 * 60
 
-const wakeupHoursByDay = [5, 11, 14, 17, 22]
-
-function getHoursList(): number[] {
+function getHoursList(wakeupHoursByDay: number[]): number[] {
   const lastHour = wakeupHoursByDay[wakeupHoursByDay.length - 1]
   const nextHour = lastHour + wakeupHoursByDay[0] + (24 - lastHour)
   const res = [...wakeupHoursByDay]
@@ -10,9 +8,12 @@ function getHoursList(): number[] {
   return res
 }
 
-const usedHoursList = getHoursList()
+export function getSleepSeconds(
+  currentDate: Date,
+  wakeupHoursByDay: number[]
+): number {
+  const usedHoursList = getHoursList(wakeupHoursByDay)
 
-export function getSleepSeconds(currentDate: Date): number {
   const currentHour = currentDate.getHours()
   const currentMinutes = currentDate.getMinutes()
   const nextHour =

@@ -8,6 +8,7 @@ declare global {
       WX_LOCALE: string
       WX_PORT: string
       WX_HOST: string
+      WX_CACHE_TTL: string
     }
   }
 }

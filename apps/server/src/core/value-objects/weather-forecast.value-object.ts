@@ -11,10 +11,12 @@ export type MoonPhaseEntity =
   | 'LastQuarter'
   | 'WaningCrescent'
   | 'NewMoon'
+  | 'New'
   | 'WaxingCrescent'
   | 'FirstQuarter'
   | 'WaxingGibbous'
   | 'FullMoon'
+  | 'Full'
 
 export type WeatherForecastValueObject = {
   datetime: Date
