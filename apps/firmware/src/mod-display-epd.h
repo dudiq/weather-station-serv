@@ -27,12 +27,12 @@ public:
                 ;
         }
         memset(this->framebuffer, 0xFF, EPD_WIDTH * EPD_HEIGHT / 2);
+        epd_init();
+        epd_poweron();
     }
 
     void drawBuffer()
     {
-        epd_init();
-        epd_poweron();
         epd_clear();
         epd_draw_grayscale_image(epd_full_screen(), this->framebuffer);
         epd_poweroff_all();
