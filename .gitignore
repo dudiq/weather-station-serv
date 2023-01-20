@@ -6,6 +6,7 @@
 
 # dependencies
 node_modules
+apps/firmware/fonts/inbox/
 
 out/
 build
