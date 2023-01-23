@@ -1,10 +1,11 @@
 import type { IncomingMessage, ServerResponse } from 'http'
 import { isErr } from '@local-weather/result'
-import { renderBlock } from '../../ui/render.block'
+import { appBlock } from '../../ui/app.block'
 import { getWeatherAdapter } from '../../infra/adapter/weather.adapter'
 import { serverAnswer } from '../../infra/service/server-answer'
 import { getSleepSeconds } from '../service/get-sleep-seconds'
 import type { DeviceResultRequest } from '../../core/device/device-result-request'
+import { routerAsyncStorage } from '../service/router-async-storage'
 
 const WAKEUP_HOURS = [5, 8, 11, 14, 17, 20, 23]
 
@@ -29,22 +30,30 @@ export async function getWeatherRoute(
     return
   }
 
-  const renderResult = await renderBlock(weatherResult.data)
-  if (isErr(renderResult)) {
-    serverAnswer(res, renderResult.error)
-    return
-  }
+  const sleepSeconds = getSleepSeconds(new Date(), WAKEUP_HOURS)
 
-  // should be less 64kb
-  const result: DeviceResultRequest = {
-    sleepSeconds: getSleepSeconds(new Date(), WAKEUP_HOURS),
-    isDev: false,
-    blocks: {
-      total: renderResult.data.length,
-      items: renderResult.data,
+  const store = {
+    sleepSeconds,
+    weather: {
+      current: weatherResult.data.current,
+      forecast: weatherResult.data.forecast,
     },
-    devSleep: 1000 * 60 * 10, // 10 minutes
   }
 
-  serverAnswer(res, result)
+  await routerAsyncStorage.run(store, async () => {
+    const renderResult = appBlock()
+
+    // should be less 64kb
+    const result: DeviceResultRequest = {
+      sleepSeconds,
+      isDev: false,
+      blocks: {
+        total: renderResult.length,
+        items: renderResult,
+      },
+      devSleep: 1000 * 60 * 10, // 10 minutes
+    }
+
+    serverAnswer(res, result)
+  })
 }
