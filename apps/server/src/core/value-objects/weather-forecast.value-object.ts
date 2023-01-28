@@ -8,15 +8,13 @@ type Portion = {
 
 export type MoonPhaseEntity =
   | 'WaningGibbous'
-  | 'LastQuarter'
+  | 'Last' // LastQuarter
   | 'WaningCrescent'
-  | 'NewMoon'
-  | 'New'
+  | 'New' // NewMoon
   | 'WaxingCrescent'
-  | 'FirstQuarter'
+  | 'First' // FirstQuarter
   | 'WaxingGibbous'
-  | 'FullMoon'
-  | 'Full'
+  | 'Full' // FullMoon
 
 export type WeatherForecastValueObject = {
   datetime: Date

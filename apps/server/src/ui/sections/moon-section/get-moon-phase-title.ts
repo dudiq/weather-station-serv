@@ -2,12 +2,10 @@ import type { MoonPhaseEntity } from '../../../core/value-objects/weather-foreca
 
 type LangPack = Record<MoonPhaseEntity, string>
 const enLocal: LangPack = {
-  NewMoon: 'New',
   New: 'New',
-  FirstQuarter: 'First Q',
-  FullMoon: 'Full',
+  First: 'First Q',
   Full: 'Full',
-  LastQuarter: 'Last Q',
+  Last: 'Last Q',
   WaningCrescent: 'Waning C',
   WaningGibbous: 'Waninng G',
   WaxingCrescent: 'Wax C',
@@ -16,11 +14,9 @@ const enLocal: LangPack = {
 
 const ruLocal: LangPack = {
   New: 'Новая',
-  NewMoon: 'Новая',
-  FirstQuarter: 'Первая',
-  FullMoon: 'Полная',
+  First: 'Первая',
   Full: 'Полная',
-  LastQuarter: 'Посленяя',
+  Last: 'Посленяя',
   WaningCrescent: '1/4 уб',
   WaningGibbous: '3/4 уб',
   WaxingCrescent: '1/4 во',
