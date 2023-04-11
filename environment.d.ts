@@ -9,6 +9,7 @@ declare global {
       WX_PORT: string
       WX_HOST: string
       WX_CACHE_TTL: string
+      WX_WAKEUP_HOURS: string
     }
   }
 }
