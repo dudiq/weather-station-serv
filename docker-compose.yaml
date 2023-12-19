@@ -1,0 +1,23 @@
+version: '3.9'
+
+services:
+  weather-server:
+    environment:
+      - WX_PLACE=${WX_PLACE}
+      - WX_TOKEN_KEY=${WX_TOKEN_KEY}
+      - WX_LOCALE=${WX_LOCALE}
+      - WX_CACHE_TTL=${WX_CACHE_TTL}
+      - WX_WAKEUP_HOURS=${WX_WAKEUP_HOURS}
+    build:
+      context: .
+      dockerfile: app.dockerfile
+    container_name: weather-server
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "5050:5050"
+    volumes:
+      - .:/home/node/app
+#    networks:
+#      - app-network
+#    command: node ./apps/server/dist/app.js

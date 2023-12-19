@@ -5,6 +5,6 @@ export function serverAnswer(res: ServerResponse, data: any, code?: number) {
 
   console.log('-handle request:', data)
 
-  const answer = JSON.stringify(data)
+  const answer = JSON.stringify(data, null, 2)
   res.end(answer)
 }

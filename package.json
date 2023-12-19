@@ -12,6 +12,7 @@
     "clean:node_modules": "turbo run clean:node_modules",
     "check-types": "turbo run check-types",
     "build": "turbo run build check-types",
+    "build:server": "turbo run build check-types --filter=server... --color",
     "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",
     "test": "turbo run test",
