@@ -20,6 +20,7 @@ WORKDIR /app
 # First install the dependencies (as they change less often)
 COPY .gitignore .gitignore
 COPY .env .env
+COPY .env.local .env.local
 COPY .env.development.local .env.development.local
 COPY environment.d.ts environment.d.ts
 COPY tsconfig.main.json tsconfig.main.json
