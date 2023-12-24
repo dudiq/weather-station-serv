@@ -8,6 +8,8 @@ services:
       - WX_LOCALE=${WX_LOCALE}
       - WX_CACHE_TTL=${WX_CACHE_TTL}
       - WX_WAKEUP_HOURS=${WX_WAKEUP_HOURS}
+      - TZ=Europe/Moscow
+
     build:
       context: .
       dockerfile: app.dockerfile
