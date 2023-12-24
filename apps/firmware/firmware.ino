@@ -9,6 +9,10 @@
 
 // Other information for the EPD47 board: https://github.com/Xinyuan-LilyGO/LilyGo-EPD47
 
+#ifndef BOARD_HAS_PSRAM
+#error "Please enable PSRAM !!!"
+#endif
+
 #include <Arduino.h>
 #define ARDUINOJSON_ENABLE_ARDUINO_STRING 1
 #include <ArduinoJson.h> // https://arduinojson.org/
