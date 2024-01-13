@@ -17,6 +17,8 @@ debug.cfg
 debuc_customr.json
 esp32.svd
 
+examples
+
 # misc
 .DS_Store
 
