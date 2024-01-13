@@ -2,8 +2,7 @@
 - Based on LilyGo EPD47 (esp32)
 - simple nodejs server
 
-
-## Hot to run server side
+## How to run server side
 - install node 18.x + version
 - install yarn 1.x
 - define variables in apps/server/.env file
@@ -11,8 +10,6 @@
 - run `yarn build`
 - run `cd apps/server`
 - run `node dist/src/app.js`
-
-
 
 ## How to run in device
 
