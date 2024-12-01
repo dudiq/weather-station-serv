@@ -15,7 +15,11 @@ services:
       dockerfile: app.dockerfile
     container_name: weather-server
     restart: unless-stopped
-    env_file: .env
+    env_file: 
+      - path: ./.env
+        required: true
+      - path: ./.env.local
+        required: false
     ports:
       - "5050:5050"
     volumes:
