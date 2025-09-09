@@ -3,13 +3,15 @@
 - simple nodejs server
 
 ## How to run server side
-- install node 18.x + version
-- install yarn 1.x
+- install node 20.x
+- install pnpm 9.15.x
 - define variables in apps/server/.env file
-- run `yarn install`
-- run `yarn build`
+- run `pnpm install`
+- run `pnpm build`
 - run `cd apps/server`
-- run `node dist/src/app.js`
+- run `pnpm dev`
+
+or just run `docker compose up -d` with predefined keys in `.env` file
 
 ## How to run in device
 

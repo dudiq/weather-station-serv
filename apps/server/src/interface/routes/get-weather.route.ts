@@ -1,5 +1,5 @@
 import type { IncomingMessage, ServerResponse } from 'http'
-import { isErr } from '@local-weather/result'
+import { isErr } from '@repo/result'
 import { appBlock } from '../../ui/app.block'
 import { getWeatherAdapter } from '../../infra/adapter/weather.adapter'
 import { serverAnswer } from '../../infra/service/server-answer'

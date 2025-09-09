@@ -1,6 +1,6 @@
 import ms from 'ms'
-import type { PromiseResult } from '@local-weather/result'
-import { resultErr, resultOk } from '@local-weather/result'
+import type { PromiseResult } from '@repo/result'
+import { resultErr, resultOk } from '@repo/result'
 import type { WeatherAdapterErrorsInstances } from '../../../../core/errors'
 import { WeatherAdapterErrors } from '../../../../core/errors'
 import type { WeatherValueObject } from '../../../../core/value-objects/weather.value-object'

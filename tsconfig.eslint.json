@@ -1,4 +1,0 @@
-{
-  "extends": "./packages/tsconfig/react-library.json",
-  "include": ["./apps", "./packages"]
-}

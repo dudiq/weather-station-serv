@@ -9,10 +9,13 @@ services:
       - WX_CACHE_TTL=${WX_CACHE_TTL}
       - WX_WAKEUP_HOURS=${WX_WAKEUP_HOURS}
       - TZ=Europe/Moscow
-
+      - PROJECT=${PROJECT}
     build:
       context: .
-      dockerfile: app.dockerfile
+      dockerfile: dockerfile
+      args:
+        - PROJECT=${PROJECT}
+        - APP=${APP}
     container_name: weather-server
     restart: unless-stopped
     env_file: .env

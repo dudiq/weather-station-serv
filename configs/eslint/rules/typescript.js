@@ -3,6 +3,7 @@ module.exports = {
   '@typescript-eslint/consistent-type-assertions': 'warn',
   '@typescript-eslint/consistent-type-definitions': ['warn', 'type'],
   '@typescript-eslint/no-array-constructor': 'warn',
+
   '@typescript-eslint/no-use-before-define': [
     'warn',
     {
@@ -35,7 +36,6 @@ module.exports = {
   'no-empty-function': 'off',
   '@typescript-eslint/no-empty-function': 'warn',
   '@typescript-eslint/no-explicit-any': 'warn',
-  '@typescript-eslint/no-implicit-any-catch': 'warn',
   '@typescript-eslint/no-unnecessary-boolean-literal-compare': 'warn',
   '@typescript-eslint/no-empty-interface': [
     'warn',
@@ -59,12 +59,12 @@ module.exports = {
       format: null,
     },
   ],
+  'import/no-duplicates': 'error',
   'brace-style': 'off',
   '@typescript-eslint/brace-style': 'warn',
   'no-dupe-class-members': 'off',
   '@typescript-eslint/no-dupe-class-members': 'error',
   'no-duplicate-imports': 'off',
-  '@typescript-eslint/no-duplicate-imports': 'warn',
   'no-extra-parens': 'off',
   '@typescript-eslint/no-extra-parens': 'warn',
   'no-extra-semi': 'off',

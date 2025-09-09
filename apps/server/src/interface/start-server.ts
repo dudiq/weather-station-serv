@@ -1,9 +1,9 @@
-import '../infra/env'
 import './routes-manager'
 import './routes-define'
 
-import type { IncomingMessage, ServerResponse } from 'http'
 import { createServer } from 'http'
+
+import type { IncomingMessage, ServerResponse } from 'http'
 
 const host = String(process.env.WX_HOST)
 const port = Number(process.env.WX_PORT)

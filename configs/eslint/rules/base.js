@@ -68,7 +68,7 @@ module.exports = {
   'import/no-mutable-exports': 'warn',
   'import/first': 'warn',
   'import/exports-last': 'off',
-  'import/order': 'warn',
+  'import/order': 'off',
   'import/newline-after-import': 'warn',
   'import/no-default-export': 'error',
 

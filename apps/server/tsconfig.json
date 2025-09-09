@@ -1,25 +1,17 @@
 {
+  "extends": "@repo/ts-config/base.json",
   "compilerOptions": {
     "baseUrl": ".",
     "outDir": "dist",
-    "target": "esnext",
-    "module": "commonjs",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": false,
-    "esModuleInterop": true,
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "sourceMap": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "useDefineForClassFields": true,
-    "incremental": true
+    "strictPropertyInitialization": false,
+    "tsBuildInfoFile": ".cache/.tsbuildinfo",
   },
-  "include": ["**/*.ts", ".eslintrc.js", "jest.config.js"],
-  "exclude": ["node_modules"]
+  "include": ["./src"],
+  "exclude": [
+    "dist",
+    ".turbo",
+    ".cache",
+    "node_modules",
+    "tsup.config.ts"
+  ]
 }

@@ -1,6 +1,10 @@
+const { resolve } = require("node:path");
+
 const baseRules = require('./rules/base')
 const typescriptRules = require('./rules/typescript')
 const { getRestrictedRules } = require('./utils/getRestrictedRules')
+
+const project = resolve(process.cwd(), "tsconfig.json");
 
 module.exports = {
   extends: [
@@ -11,14 +15,24 @@ module.exports = {
 
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint'],
+  parserOptions: {
+    project,
+  },
   settings: {
     files: ['**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx'],
     'import/resolver': {
-      typescript: {},
+      typescript: {
+        project,
+      },
     },
   },
-
   overrides: [
+    {
+      files: ['*.d.ts'],
+      rules: {
+        'spaced-comment': 'off',
+      }
+    },
     {
       files: ['**/*.ts', '**/*.tsx'],
       parser: '@typescript-eslint/parser',

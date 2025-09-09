@@ -1,10 +1,9 @@
-// eslint-disable-next-line eslint-comments/no-restricted-disable
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
-const time = (process.env._TIME_ENTRY_ as number) || Date.now()
+const time = Number(process.env._TIME_ENTRY_) || Date.now()
 
 export const buildVersion = {
   time,
   date: new Date(time),
-  tz: process.env.TZ,
+  sha: process.env.GITHUB_SHA || '',
+  tz: process.env.TZ || '',
+  version: String(process.env._APP_VERSION_) || '',
 }

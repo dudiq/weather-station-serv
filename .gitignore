@@ -42,3 +42,4 @@ env.*.local
 
 *.example.ts
 *.cache.json
+.turbo/

@@ -1,5 +1,5 @@
-import type { PromiseResult } from '@local-weather/result'
-import { isErr, resultErr, resultOk } from '@local-weather/result'
+import type { PromiseResult } from '@repo/result'
+import { isErr, resultErr, resultOk } from '@repo/result'
 import type { WeatherValueObject } from '../../core/value-objects/weather.value-object'
 import type { WeatherForecastValueObject } from '../../core/value-objects/weather-forecast.value-object'
 import type { WeatherAdapterErrorsInstances } from '../../core/errors'
