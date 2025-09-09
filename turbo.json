@@ -1,5 +1,5 @@
 {
-  "pipeline": {
+  "tasks": {
     "clean:dist": {
       "cache": false
     },
@@ -20,7 +20,8 @@
       "outputs": []
     },
     "dev": {
-      "cache": false
+      "cache": false,
+      "persistent": true
     },
     "test": {
       "cache": false,
