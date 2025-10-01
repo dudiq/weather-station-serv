@@ -1,6 +1,4 @@
-import './routes-manager'
-import './routes-define'
-
+import {registerRoutes} from '@lw/routes/register-routes'
 import { createServer } from 'http'
 
 import type { IncomingMessage, ServerResponse } from 'http'
@@ -11,6 +9,7 @@ const port = Number(process.env.WX_PORT)
 export function startServer(
   handler: (req: IncomingMessage, res: ServerResponse) => void
 ) {
+  registerRoutes()
   const server = createServer(handler)
   const serverPath = `${host}:${port}`
   server.listen(port, host, () => {

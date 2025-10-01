@@ -1,5 +1,5 @@
-import type { DeviceTextNode } from './device-text-node'
 import type { DeviceImageNode } from './device-image-node'
+import type { DeviceTextNode } from './device-text-node'
 
 export type DeviceItem = DeviceTextNode | DeviceImageNode
 

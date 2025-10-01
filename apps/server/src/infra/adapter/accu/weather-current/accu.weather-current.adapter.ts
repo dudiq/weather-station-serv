@@ -1,16 +1,22 @@
-import ms from 'ms'
-import type { PromiseResult } from '@repo/result'
+import { WeatherAdapterErrors } from '@lw/core/errors'
 import { resultErr, resultOk } from '@repo/result'
-import type { WeatherAdapterErrorsInstances } from '../../../../core/errors'
-import { WeatherAdapterErrors } from '../../../../core/errors'
-import type { WeatherValueObject } from '../../../../core/value-objects/weather.value-object'
+import ms, {StringValue} from 'ms'
+
+import { CacheFile } from '../../../cache-file'
 // import { result } from './current.example'
 import { fetchRequest } from '../../../service/fetch-request'
-import { CacheFile } from '../../../cache-file'
+
 import { accuWeatherCurrentMapper } from './accu.weather-current.mapper'
 
+import type { WeatherAdapterErrorsInstances } from '@lw/core/errors'
+import type { WeatherValueObject } from '@lw/core/value-objects/weather.value-object'
+import type { PromiseResult } from '@repo/result'
+
+const ttlValue = process.env.WX_CACHE_TTL as (StringValue | undefined)
+  || '1 hour'
+
 const cache = new CacheFile<unknown>('weather-current.cache.json', {
-  ttl: ms(`${process.env.WX_CACHE_TTL}`),
+  ttl: ms(ttlValue),
 })
 
 export async function accuWeatherCurrentAdapter(): PromiseResult<
@@ -51,3 +57,4 @@ export async function accuWeatherCurrentAdapter(): PromiseResult<
     return resultErr(new WeatherAdapterErrors.GetWeatherRequest(e))
   }
 }
+

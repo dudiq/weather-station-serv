@@ -1,29 +1,19 @@
-import type { IncomingMessage, ServerResponse } from 'http'
+import { getWeatherAdapter } from '@lw/infra/adapter/weather.adapter'
+import { serverAnswer } from '@lw/infra/service/server-answer'
+import {failedWeatherResult} from "@lw/interface/get-weather/failed-weather-result";
+import {WAKEUP_HOURS} from "@lw/interface/get-weather/wakeup-hours";
+import { appBlock } from '@lw/ui/app.block'
 import { isErr } from '@repo/result'
-import { appBlock } from '../../ui/app.block'
-import { getWeatherAdapter } from '../../infra/adapter/weather.adapter'
-import { serverAnswer } from '../../infra/service/server-answer'
-import { getSleepSeconds } from '../service/get-sleep-seconds'
-import type { DeviceResultRequest } from '../../core/device/device-result-request'
-import { routerAsyncStorage } from '../service/router-async-storage'
 
-const WAKEUP_HOURS: number[] = (() => {
-  const defaultHours = [5, 11, 14, 17, 20, 23]
+import { getSleepSeconds } from '../interface/service/get-sleep-seconds'
+import { routerAsyncStorage } from '../interface/service/router-async-storage'
 
-  const envHours = process.env.WX_WAKEUP_HOURS
-
-  if (!envHours) return defaultHours
-
-  try {
-    const hoursFromEnv = JSON.parse(envHours) as number[]
-    if (Array.isArray(hoursFromEnv)) return hoursFromEnv
-    return defaultHours
-  } catch (e: unknown) {
-    return defaultHours
-  }
-})()
+import type { DeviceResultRequest } from '@lw/core/device/device-result-request'
+import type { IncomingMessage, ServerResponse } from 'http'
 
 console.log('WAKEUP_HOURS', WAKEUP_HOURS)
+
+const DEV_SLEEP=  1000 * 60 * 10 // 10 minutes
 
 export async function getWeatherRoute(
   req: IncomingMessage,
@@ -39,14 +29,17 @@ export async function getWeatherRoute(
     deviceWidth,
     deviceHeight,
   })
+  const sleepSeconds = getSleepSeconds(new Date(), WAKEUP_HOURS)
 
   const weatherResult = await getWeatherAdapter()
+  console.log('---weatherResult', weatherResult)
   if (isErr(weatherResult)) {
-    serverAnswer(res, weatherResult.error)
+    console.error('weather-get-failed', {
+      weatherResult
+    })
+    serverAnswer(res, failedWeatherResult())
     return
   }
-
-  const sleepSeconds = getSleepSeconds(new Date(), WAKEUP_HOURS)
 
   const store = {
     sleepSeconds,
@@ -67,7 +60,7 @@ export async function getWeatherRoute(
         total: renderResult.length,
         items: renderResult,
       },
-      devSleep: 1000 * 60 * 10, // 10 minutes
+      devSleep: DEV_SLEEP,
     }
 
     serverAnswer(res, result)

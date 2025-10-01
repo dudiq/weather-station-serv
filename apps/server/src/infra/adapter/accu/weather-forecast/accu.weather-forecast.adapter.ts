@@ -1,16 +1,15 @@
+import { WeatherAdapterErrors } from '@lw/core/errors'
+// import { forecastResult } from './accu.forecast.example'
+import { CacheFile } from '@lw/infra/cache-file'
+import { fetchRequest } from '@lw/infra/service/fetch-request'
 import { resultErr, resultOk } from '@repo/result'
 import ms, {StringValue} from 'ms'
 
-import { WeatherAdapterErrors } from '../../../../core/errors'
-// import { forecastResult } from './accu.forecast.example'
-import { CacheFile } from '../../../cache-file'
-import { fetchRequest } from '../../../service/fetch-request'
-
 import { accuWeatherForecastMapper } from './accu.weather-forecast.mapper'
 
+import type { WeatherAdapterErrorsInstances } from '@lw/core/errors'
+import type { WeatherForecastValueObject } from '@lw/core/value-objects/weather-forecast.value-object'
 import type { PromiseResult } from '@repo/result'
-import type { WeatherAdapterErrorsInstances } from '../../../../core/errors'
-import type { WeatherForecastValueObject } from '../../../../core/value-objects/weather-forecast.value-object'
 
 const ttl = process.env.WX_CACHE_TTL as StringValue
 const cache = new CacheFile<unknown>('weather-forecast.cache.json', {

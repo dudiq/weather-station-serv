@@ -1,5 +1,6 @@
-import type { IncomingMessage, ServerResponse } from 'http'
 import { routesManager } from './routes-manager'
+
+import type { IncomingMessage, ServerResponse } from 'http'
 
 export async function handleRequest(req: IncomingMessage, res: ServerResponse) {
   const routesList = routesManager.getRoutes()

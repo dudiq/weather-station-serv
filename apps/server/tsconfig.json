@@ -5,13 +5,10 @@
     "outDir": "dist",
     "strictPropertyInitialization": false,
     "tsBuildInfoFile": ".cache/.tsbuildinfo",
+    "paths": {
+      "@lw/*": ["./src/*"]
+    }
   },
   "include": ["./src"],
-  "exclude": [
-    "dist",
-    ".turbo",
-    ".cache",
-    "node_modules",
-    "tsup.config.ts"
-  ]
+  "exclude": ["dist", ".turbo", ".cache", "node_modules", "tsup.config.ts"]
 }

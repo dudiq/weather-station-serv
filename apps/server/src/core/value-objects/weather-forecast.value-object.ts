@@ -2,8 +2,8 @@ import type { WeatherNameEntity } from '../entities/weather-name.entity'
 
 type Portion = {
   weatherName: WeatherNameEntity
-  precipitationProbably: number // percent
-  solarIrradiance: number // W/m²
+  precipitationProbably?: number // percent
+  solarIrradiance?: number // W/m²
 }
 
 export type MoonPhaseEntity =
@@ -18,21 +18,23 @@ export type MoonPhaseEntity =
 
 export type WeatherForecastValueObject = {
   datetime: Date
-  sun: {
+  temp: {
+    min: number
+    max: number
+  }
+  day: Portion
+
+  //optional
+  sun?: {
     riseDate: Date
     setDate: Date
   }
-  moon: {
+  moon?: {
     riseDate: Date
     setDate: Date
     phase: MoonPhaseEntity
     age: number
   }
-  temp: {
-    min: number
-    max: number
-  }
-  airQuality: number
-  day: Portion
-  night: Portion
+  airQuality?: number
+  night?: Portion
 }

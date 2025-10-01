@@ -5,26 +5,28 @@ export type WeatherValueObject = {
   datetime: Date
   weatherName: WeatherNameEntity
   weatherDescription: string
-  isDayTime: boolean
   temp: {
     current: number // celsius
     feelsLike?: number // celsius
   }
   hum: {
     outdoor: number // percent
-    indoor?: number // percent
+    indoor?: number // percent, not necessary
   }
-  dewPoint: number
   wind: {
     degrees: number // degrees,
     speed: number // km/h
-    gustSpeed?: number // meters per seconds
+    gustSpeed?: number // meters per seconds, not necessary
   }
   uvindex?: number // see sun uvindex
-  visibility?: number // meters
   cloudCover?: number // percentage
   pressure: {
     value: number // mmHg
     tendency?: PressureTendencyValueObject
   }
+
+  // not necessary
+  isDayTime?: boolean
+  visibility?: number // meters
+  dewPoint?: number
 }

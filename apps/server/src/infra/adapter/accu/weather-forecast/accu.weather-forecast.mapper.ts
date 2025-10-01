@@ -1,4 +1,4 @@
-import type { WeatherForecastValueObject } from '../../../../core/value-objects/weather-forecast.value-object'
+import type { WeatherForecastValueObject } from '@lw/core/value-objects/weather-forecast.value-object'
 import { getWeatherKey } from '../units/get-weather-key'
 
 export function accuWeatherForecastMapper(
