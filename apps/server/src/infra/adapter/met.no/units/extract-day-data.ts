@@ -31,10 +31,10 @@ export function extractDayData(timeseries: TTimeseries[]) {
     let tempMin = items[0]?.data.instant.details.air_temperature || -100
     let tempMax = items[0]?.data.instant.details.air_temperature || 100
     items.forEach(item => {
-      if (item.data.instant.details.air_temperature > tempMin) {
+      if (item.data.instant.details.air_temperature < tempMin) {
         tempMin = item.data.instant.details.air_temperature
       }
-      if (item.data.instant.details.air_temperature < tempMax) {
+      if (item.data.instant.details.air_temperature > tempMax) {
         tempMax = item.data.instant.details.air_temperature
       }
     })
