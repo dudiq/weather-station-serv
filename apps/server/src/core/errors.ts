@@ -1,5 +1,6 @@
-import type { KeyOfErrors } from '@local-weather/errors'
-import { errorFactory } from '@local-weather/errors'
+import { errorFactory } from '@repo/errors'
+
+import type { KeyOfErrors } from '@repo/errors'
 
 export const { WeatherAdapterErrors } = errorFactory('WeatherAdapterErrors', {
   GetWeatherParse: 'Error while parsing weather result',

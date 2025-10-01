@@ -1,4 +1,4 @@
-import type { WeatherNameEntity } from '../../../../core/entities/weather-name.entity'
+import type { WeatherNameEntity } from '@lw/core/entities/weather-name.entity'
 
 const accuMeteoWeather: Record<number, WeatherNameEntity> = {
   1: 'sunny',

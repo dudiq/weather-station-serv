@@ -1,4 +1,4 @@
-import type { MoonPhaseEntity } from '../../../core/value-objects/weather-forecast.value-object'
+import type { MoonPhaseEntity } from '@lw/core/value-objects/weather-forecast.value-object'
 
 type LangPack = Record<MoonPhaseEntity, string>
 const enLocal: LangPack = {

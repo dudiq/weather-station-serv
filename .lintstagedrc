@@ -1,10 +1,10 @@
 {
-    "apps/**/*.{js,jsx,ts,tsx,html}": [
+    "apps/server/*.{js,jsx,ts,tsx,html}": [
       "eslint --fix",
       "prettier --write"
     ],
-    "packages/!(environment,eslint-config,tsconfig)/**/*.{js,jsx,ts,tsx,html}": [
-      "eslint --fix",
+    "packages/**/*.{js,jsx,ts,tsx,html}": [
+      "npm run lint --",
       "prettier --write"
     ],
     "*.json": [

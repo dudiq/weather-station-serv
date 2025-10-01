@@ -1,5 +1,6 @@
-import { formatDate } from '../../interface/service/format-date'
-import { routerAsyncStorage } from '../../interface/service/router-async-storage'
+import { formatDate } from '@lw/interface/service/format-date'
+import { routerAsyncStorage } from '@lw/interface/service/router-async-storage'
+
 import type { BlockResult } from '../types'
 
 export function datetimeSection(): BlockResult {

@@ -38,6 +38,10 @@ export class CacheFile<T> {
     }
   }
 
+  setTtl(value: number){
+    this.options.ttl = value
+  }
+
   setValue(value: T): void {
     try {
       const data = JSON.stringify({

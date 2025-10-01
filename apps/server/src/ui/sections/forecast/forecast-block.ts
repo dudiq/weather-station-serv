@@ -1,13 +1,14 @@
-import type { BlockResult } from '../../types'
-import { getMeteoIcon } from '../../../interface/service/get-meteo-icon'
-import { formatDate } from '../../../interface/service/format-date'
-import { routerAsyncStorage } from '../../../interface/service/router-async-storage'
+import { formatDate } from '@lw/interface/service/format-date'
+import { getMeteoIcon } from '@lw/interface/service/get-meteo-icon'
+import { routerAsyncStorage } from '@lw/interface/service/router-async-storage'
+
+import type { BlockResult } from '@lw/ui/types'
 
 const START_X = 40
 const START_Y = 321
 const ITEM_GAP = 300
 
-const MAX_ITEMS = 3
+const MAX_DAYS = 3
 
 export function forecastBlock(): BlockResult {
   const store = routerAsyncStorage.getStore()
@@ -15,9 +16,10 @@ export function forecastBlock(): BlockResult {
   const { forecast } = store.weather
 
   return [...forecast]
-    .slice(0, MAX_ITEMS)
+    .slice(0, MAX_DAYS)
     .reduce<BlockResult>((acc, item, index) => {
       console.log('item.datetime', item.datetime)
+
       return [
         ...acc,
         {

@@ -1,9 +1,9 @@
-import https from 'https'
+import https, {RequestOptions} from 'https'
 
-export async function fetchRequest<T>(url: string): Promise<T> {
+export async function fetchRequest<T>(url: string, options?: RequestOptions): Promise<T> {
   return new Promise((resolve, reject) => {
     https
-      .get(url, (resp) => {
+      .get(url, options || {}, (resp) => {
         let data = ''
 
         // A chunk of data has been received.

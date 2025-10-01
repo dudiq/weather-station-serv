@@ -1,4 +1,4 @@
-import { startServer } from './interface/start-server'
-import { handleRequest } from './interface/handle-request'
+import { handleRequest } from './interface/system/handle-request'
+import { startServer } from './interface/system/start-server'
 
 startServer(handleRequest)

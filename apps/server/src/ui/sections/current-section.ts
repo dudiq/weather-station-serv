@@ -1,6 +1,7 @@
+import { getMeteoIcon } from '@lw/interface/service/get-meteo-icon'
+import { routerAsyncStorage } from '@lw/interface/service/router-async-storage'
+
 import type { BlockResult } from '../types'
-import { getMeteoIcon } from '../../interface/service/get-meteo-icon'
-import { routerAsyncStorage } from '../../interface/service/router-async-storage'
 
 const START_Y = 49
 
