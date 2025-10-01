@@ -7,7 +7,7 @@
     "clean:node_modules": "rimraf ./node_modules",
     "dev": "NODE_ENV=development dotenv-run -v -- tsx watch --inspect --clear-screen=false ./src/app.ts",
     "build": "dotenv-run -- tsup",
-    "start": "npm run build && node build/app.js"
+    "start": "npm run build && node dist/index.js"
   },
   "dependencies": {
     "@repo/build-version": "workspace:*",

@@ -18,8 +18,8 @@ export function getForecastDays(timeseries: MetNoWeatherValueObject['properties'
         weatherName: getWeatherSymbol(weatherValue)
       },
       temp: {
-        max: dayData.day.data.instant.details.air_temperature,
-        min: dayData.night.data.instant.details.air_temperature,
+        max: dayData.temp.max,
+        min: dayData.temp.min,
       }
     }
   })

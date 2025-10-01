@@ -2,11 +2,13 @@ import type {MetNoWeatherValueObject} from "../types/met-no-weather.value-object
 
 type TTimeseries = MetNoWeatherValueObject['properties']['timeseries'][0]
 
+// TODO: add old temp values for current day only
+
 export function extractDayData(timeseries: TTimeseries[]) {
   const result: {
     datetime: Date,
-    night: TTimeseries
-    day: TTimeseries
+    day: TTimeseries,
+    temp: { min: number, max: number }
   }[] = [];
   const grouped: Record<string, TTimeseries[]> = {};
 
@@ -26,22 +28,30 @@ export function extractDayData(timeseries: TTimeseries[]) {
   }
 
   for (const [monthDay, items] of Object.entries(grouped)) {
-    const midnight = items.reduce((closest, current) => {
-      const currentHour = new Date(current.time).getUTCHours();
-      const closestHour = new Date(closest.time).getUTCHours();
-      return Math.abs(currentHour - 0) < Math.abs(closestHour - 0) ? current : closest;
-    });
+    let tempMin = items[0]?.data.instant.details.air_temperature || -100
+    let tempMax = items[0]?.data.instant.details.air_temperature || 100
+    items.forEach(item => {
+      if (item.data.instant.details.air_temperature > tempMin) {
+        tempMin = item.data.instant.details.air_temperature
+      }
+      if (item.data.instant.details.air_temperature < tempMax) {
+        tempMax = item.data.instant.details.air_temperature
+      }
+    })
 
     const midday = items.reduce((closest, current) => {
-      const currentHour = new Date(current.time).getUTCHours();
-      const closestHour = new Date(closest.time).getUTCHours();
+      const currentHour = new Date(current.time).getHours();
+      const closestHour = new Date(closest.time).getHours();
       return Math.abs(currentHour - 12) < Math.abs(closestHour - 12) ? current : closest;
     });
 
     result.push({
       datetime: new Date(Number(monthDay)),
-      night: midnight,
-      day: midday
+      day: midday,
+      temp: {
+        min: tempMin,
+        max: tempMax
+      }
     });
   }
 
