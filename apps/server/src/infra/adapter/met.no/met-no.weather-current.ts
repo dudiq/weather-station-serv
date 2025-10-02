@@ -18,10 +18,7 @@ const ttlValue = process.env.WX_CACHE_TTL as (StringValue | undefined)
   || '1 hour'
 const TTL = ms(ttlValue)
 
-const cache = new CacheFile<{
-  current: WeatherValueObject,
-  forecast: WeatherForecastValueObject[]
-}>('met-no.weather-current.cache.json', {
+const cache = new CacheFile<MetNoWeatherValueObject>('met-no.weather-result.cache.json', {
   ttl: TTL,
 })
 
@@ -39,12 +36,16 @@ export async function metNoWeatherCurrentAdapter(): PromiseResult<
   { current: WeatherValueObject, forecast: WeatherForecastValueObject[] },
   WeatherAdapterErrorsInstances
 > {
-  const cacheValue = cache.checkExpire() ? cache.getValue() : undefined
+  const cacheValue = cache.isExpired ? undefined : cache.getValue()
 
   if (cacheValue?.content) {
     console.log('-return cached current weather value')
-    return resultOk(cacheValue?.content)
+    return resultOk({
+      current: metNoWeatherCurrentMapper(cacheValue?.content.properties.timeseries),
+      forecast: getForecastDays(cacheValue?.content.properties.timeseries)
+    })
   }
+
   try {
     const url = `https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=${process.env.WX_LAT}&lon=${process.env.WX_LON}`
     const res = await fetch(url, {
@@ -61,14 +62,12 @@ export async function metNoWeatherCurrentAdapter(): PromiseResult<
       return resultErr(new WeatherAdapterErrors.GetWeatherRequest(result))
     }
 
-    console.log('-save value to cache')
-
     const resultMapped = {
-      current: metNoWeatherCurrentMapper(result.properties.timeseries[0]),
+      current: metNoWeatherCurrentMapper(result.properties.timeseries),
       forecast: getForecastDays(result.properties.timeseries)
     }
     cache.setTtl(nextTtl)
-    cache.setValue(resultMapped)
+    cache.setValue(result)
     return resultOk(resultMapped)
   } catch (e: unknown) {
     return resultErr(new WeatherAdapterErrors.GetWeatherRequest(e))

@@ -16,12 +16,12 @@ export class CacheFile<T> {
     // })
   }
 
-  checkExpire(): boolean {
+  get isExpired(): boolean {
     const value = this.getValue()
-    if (!value) return false
+    if (!value) return true
     const now = Date.now()
     const dx = now - value.saveDate
-    return dx <= this.options.ttl
+    return dx > this.options.ttl
   }
 
   getValue(): { content: T; saveDate: number } | undefined {

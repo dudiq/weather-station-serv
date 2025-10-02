@@ -23,7 +23,7 @@ export async function accuWeatherCurrentAdapter(): PromiseResult<
   WeatherValueObject,
   WeatherAdapterErrorsInstances
 > {
-  const cacheValue = cache.checkExpire() ? cache.getValue() : undefined
+  const cacheValue = cache.isExpired ? undefined : cache.getValue()
 
   if (cacheValue?.content) {
     console.log('-return cached current weather value')

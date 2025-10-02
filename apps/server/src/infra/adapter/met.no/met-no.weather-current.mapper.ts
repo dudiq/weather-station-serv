@@ -1,21 +1,28 @@
 import {getMgMercury} from "@lw/infra/service/get-mg-mercury";
 
+import {MetNoWeatherValueObject} from "./types/met-no-weather.value-object";
 import {getFeelsLikeTemp} from "./units/get-feels-like-temp";
 import {getWeatherDetails} from "./units/get-weather-details";
 import {getWeatherSymbol} from "./units/get-weather-symbol";
 
 import type {WeatherValueObject} from '@lw/core/value-objects/weather.value-object'
-import {MetNoWeatherValueObject} from "@lw/infra/adapter/met.no/types/met-no-weather.value-object";
 
-export function metNoWeatherCurrentMapper(timeSeriesNode: MetNoWeatherValueObject['properties']['timeseries'][0]): WeatherValueObject {
-  const weatherValue = timeSeriesNode.data.next_1_hours?.summary.symbol_code
-    || timeSeriesNode.data.next_6_hours?.summary.symbol_code
-    || timeSeriesNode.data.next_12_hours?.summary.symbol_code
+export function metNoWeatherCurrentMapper(timeSeries: MetNoWeatherValueObject['properties']['timeseries']): WeatherValueObject {
+  const now = Date.now();
+  const closestTimeSeries = timeSeries.reduce((res, series) => {
+    const nextSeriesDx = (new Date(series.time).getTime()) - now
+    const currentSeriesDx = (new Date(res.time).getTime()) - now
+    return nextSeriesDx< currentSeriesDx ? series : res
+  }, timeSeries[0])
 
-  const details = timeSeriesNode.data.instant.details
+  const weatherValue = closestTimeSeries.data.next_1_hours?.summary.symbol_code
+    || closestTimeSeries.data.next_6_hours?.summary.symbol_code
+    || closestTimeSeries.data.next_12_hours?.summary.symbol_code
+
+  const details = closestTimeSeries.data.instant.details
 
   return {
-    datetime: new Date(timeSeriesNode.time),
+    datetime: new Date(closestTimeSeries.time),
     weatherDescription: getWeatherDetails(weatherValue),
     weatherName: getWeatherSymbol(weatherValue),
     temp: {
