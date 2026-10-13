@@ -119,11 +119,10 @@ void loopDev() {
 }
 
 void processResults() {
-  sectionStatusBar.drawStatusBar(600, 20);
-
   Serial.println("-draw json");
   const DynamicJsonDocument &json = modRequest.getJson();
   modDrawing.drawJson(json);
+  sectionStatusBar.drawStatusBar(580, EPD_HEIGHT - 12);
 
   bool isDev = json["isDev"].as<bool>();
   if (isDev) {

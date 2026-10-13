@@ -68,4 +68,17 @@ public:
     {
         return WiFi.RSSI();
     }
+
+    int wifiSignalPercent()
+    {
+        if (!checkConnected())
+            return 0;
+        // Approximate signal strength: -100 dBm = 0%, -50 dBm = 100%.
+        int rssi = wifiSignal();
+        if (rssi <= -100)
+            return 0;
+        if (rssi >= -50)
+            return 100;
+        return 2 * (rssi + 100);
+    }
 };

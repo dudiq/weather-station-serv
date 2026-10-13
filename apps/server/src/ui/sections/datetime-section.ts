@@ -8,25 +8,35 @@ export function datetimeSection(): BlockResult {
   if (!store) return []
   const sleepSeconds = store.sleepSeconds
   const now = new Date()
-  const nextWakeUp = new Date()
-  nextWakeUp.setTime(nextWakeUp.getTime() + sleepSeconds * 1000)
+  const nextWakeUp = new Date(now.getTime() + sleepSeconds * 1000)
 
   return [
     {
       type: 'text',
-      x: 5,
-      y: 5,
-      font: 't-md',
-      align: 'LEFT',
-      text: formatDate(now, 'HH:mm | eee, dd MMM'),
+      x: 12,
+      y: 528,
+      font: 't-sm',
+      opacity: 50,
+      align: 'BASELINE',
+      text: `${formatDate(now, 'HH:mm')} |`,
     },
     {
       type: 'text',
-      x: 360,
-      y: 5,
+      x: 100,
+      y: 528,
       font: 't-sm',
-      align: 'LEFT',
-      text: `-> ${formatDate(nextWakeUp, 'HH:mm, dd MMM')}`,
+      opacity: 50,
+      align: 'BASELINE',
+      text: `${formatDate(now, 'eee, dd MMM')} |`,
+    },
+    {
+      type: 'text',
+      x: 300,
+      y: 528,
+      font: 't-sm',
+      opacity: 50,
+      align: 'BASELINE',
+      text: `-> ${formatDate(nextWakeUp, 'HH:mm, dd MMM')} |`,
     },
   ]
 }

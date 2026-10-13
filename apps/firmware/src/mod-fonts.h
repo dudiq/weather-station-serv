@@ -10,6 +10,7 @@
 #include "fonts/moon24.h"
 
 #include "fonts/meteocons42.h"
+#include "fonts/meteoconsSmall.h"
 #include "fonts/meteocons96.h"
 
 GFXfont getFontByName(String fontName)
@@ -30,6 +31,8 @@ GFXfont getFontByName(String fontName)
 
     if (fontName == "meteo-md")
         return meteocons42;
+    if (fontName == "meteo-sm")
+        return meteoconsSmall;
     if (fontName == "meteo-xl")
         return meteocons96;
 

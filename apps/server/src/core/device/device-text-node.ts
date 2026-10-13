@@ -9,9 +9,11 @@ export type DeviceTextNode = {
     | 't-xl' // for header
     | 'field-icons' // humidity, pressure, wind, cloud cover and UV
     | 'meteo-md' // meteo icons default
+    | 'meteo-sm' // forecast icons, 8 pixels smaller at maximum size
     | 'meteo-xl' // meteo icons for header
     | 'moon' // ordinary moon icons
 
   text: string
-  align: 'LEFT' | 'RIGHT' | 'CENTER' | 'V_CENTER' | 'H_CENTER'
+  opacity?: number // 0-100; defaults to 100, rendered as grayscale on white
+  align: 'LEFT' | 'RIGHT' | 'CENTER' | 'V_CENTER' | 'H_CENTER' | 'BASELINE'
 }

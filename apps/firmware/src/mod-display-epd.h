@@ -65,8 +65,11 @@ public:
         epd_fill_rect(x, y, w, h, color, this->framebuffer);
     }
 
-    void drawString(int x, int y, String text, alignment align)
+    void drawString(int x, int y, String text, alignment align, int opacity = 100)
     {
+        opacity = constrain(opacity, 0, 100);
+        if (opacity == 0)
+            return;
         char *data = const_cast<char *>(text.c_str());
         int x1, y1; // the bounds of x,y and w and h of the variable 'text' in pixels.
         int w, h;
@@ -79,11 +82,32 @@ public:
             x = x - w / 2;
 
         // int cursor_y = y + h;
-        int cursor_y = y + h;
+        int cursor_y = align == BASELINE ? y : y + h;
         if (align == CENTER || align == V_CENTER)
             cursor_y = cursor_y + h / 2;
 
-        write_string(&this->currentFont, data, &x, &cursor_y, this->framebuffer);
+        if (opacity == 100)
+        {
+            write_string(&this->currentFont, data, &x, &cursor_y, this->framebuffer);
+            return;
+        }
+        // Blend black text with white in the display's 16-level grayscale palette.
+        FontProperties properties = {};
+        properties.fg_color = (15 * (100 - opacity) + 50) / 100;
+        properties.bg_color = 15;
+        int start = 0;
+        do
+        {
+            int end = text.indexOf('\n', start);
+            if (end < 0)
+                end = text.length();
+            String line = text.substring(start, end);
+            int cursor_x = x;
+            write_mode(&this->currentFont, line.c_str(), &cursor_x, &cursor_y,
+                       this->framebuffer, BLACK_ON_WHITE, &properties);
+            cursor_y += this->currentFont.advance_y;
+            start = end + 1;
+        } while (start <= text.length());
     }
     void drawImageByUrl(String filePath, int x, int y, int width, int height)
     {

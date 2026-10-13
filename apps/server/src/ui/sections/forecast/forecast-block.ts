@@ -26,7 +26,7 @@ export function forecastBlock(): BlockResult {
           type: 'text',
           x: START_X + index * ITEM_GAP,
           y: START_Y + 50,
-          font: 'meteo-md',
+          font: 'meteo-sm',
           text: getMeteoIcon(item.day.weatherName),
           align: 'H_CENTER',
         },

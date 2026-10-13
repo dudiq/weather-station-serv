@@ -58,6 +58,27 @@ Moon icons and phase captions use their existing font and logic.
 Deploy firmware with `field-icons` before deploying the new server response:
 older firmware falls back to the text font and cannot render these glyphs.
 
+## Forecast icons and system footer
+
+`meteo-sm` uses `meteoconsSmall.h`, resampled from the existing `meteocons42.h`
+with preserved proportions. The largest glyph dimension is reduced by exactly
+8 pixels (89 to 81). Regenerate with:
+
+```powershell
+python apps/firmware/fonts/build-forecast-icons.py
+```
+
+Forecast days use this smaller font; current weather retains `meteo-md`.
+The system footer uses the smallest Inter size (`t-sm`) with `align: 'BASELINE'`
+at y=528 on the 960x540 display. All blocks share the same text baseline, regardless
+of glyph heights. The server sends separate time, date and next-update blocks. Firmware
+adds battery percent, voltage and Wi-Fi signal percent at x=580 before shutting Wi-Fi off.
+Signal strength uses a simple clamped scale: -100 dBm is 0%, -50 dBm is 100%.
+It is an approximate signal indicator, not a throughput measurement.
+All footer text uses `opacity: 50`, rendered as gray level 8/15 on white;
+omitting opacity preserves the normal black text. This is grayscale rendering,
+not transparency over arbitrary backgrounds.
+
 ## Low-level fontconvert
 
 The following converter is available for custom fonts and icon work.

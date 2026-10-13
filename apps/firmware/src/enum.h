@@ -20,5 +20,6 @@ enum alignment
     RIGHT,
     CENTER,
     H_CENTER,
-    V_CENTER
+    V_CENTER,
+    BASELINE
 };

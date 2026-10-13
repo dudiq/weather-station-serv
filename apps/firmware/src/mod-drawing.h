@@ -55,6 +55,8 @@ public:
 
     alignment getAlign(String align)
     {
+        if (align == "BASELINE")
+            return BASELINE;
         if (align == "V_CENTER")
             return V_CENTER;
         if (align == "H_CENTER")
@@ -109,7 +111,8 @@ public:
             x,
             y,
             json["blocks"]["items"][d]["text"].as<String>(),
-            align);
+            align,
+            json["blocks"]["items"][d]["opacity"] | 100);
 
         // if (WX_IS_DEV)
         // {
