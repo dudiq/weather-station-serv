@@ -92,12 +92,21 @@ not transparency over arbitrary backgrounds.
 
 Humidity/pressure and wind/cloud cover occupy two aligned rows in the upper-right
 area. Values use Inter `t-md`; icons use `field-icons`. Moon phase occupies a
-separate row below, with full localized phase names. Optional UV remains below
-the group; unavailable cloud cover, UV or moon data does not produce placeholders.
+separate row below, with full localized phase names in `t-sm` at 50% opacity.
+Optional UV remains below the group; unavailable cloud cover and UV are omitted.
+When a provider supplies no moon metadata (e.g. met.no), the server uses the existing
+approximate lunar-cycle calculation for both phase title and icon instead of hiding
+the moon. When a provider supplies a phase, both the title and icon use that phase.
 
 The existing `moon24` font includes the `0` new-moon symbol as well as `@` and A-Z.
 Regenerate it with `python apps/firmware/fonts/build-moon.py`; the source, name and
 24 pt size are unchanged.
+
+Current weather occupies the left sector: separate icon/temperature positions,
+an optional feels-like row (including 0 degrees) and an Inter `t-md` description.
+Text blocks may specify `width` and `maxLines`; firmware wraps words using actual
+font metrics, truncating the last line with `...` when necessary. Current weather
+uses a 424-pixel width and two lines to avoid the details and forecast sections.
 
 ## Low-level fontconvert
 

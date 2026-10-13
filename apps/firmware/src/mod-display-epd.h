@@ -118,6 +118,58 @@ public:
             start = end + 1;
         } while (start <= text.length());
     }
+    void drawWrappedText(int x, int baseline, String text, int maxWidth, int maxLines, int opacity)
+    {
+        if (maxWidth <= 0)
+            return;
+        maxLines = constrain(maxLines, 1, 4);
+        text.replace('\n', ' ');
+        text.replace('\r', ' ');
+        text.trim();
+        for (int row = 0; row < maxLines && text.length(); row++)
+        {
+            String line;
+            bool clippedWord = false;
+            while (text.length())
+            {
+                int end = text.indexOf(' ');
+                if (end < 0)
+                    end = text.length();
+                String word = text.substring(0, end);
+                String candidate = line.length() ? line + " " + word : word;
+                if (textWidth(candidate) > maxWidth)
+                {
+                    if (line.length())
+                        break;
+                    line = word;
+                    text = text.substring(end);
+                    text.trim();
+                    clippedWord = true;
+                    break;
+                }
+                line = candidate;
+                text = text.substring(end);
+                text.trim();
+            }
+            if (clippedWord || (row == maxLines - 1 && text.length()))
+            {
+                String suffix = "...";
+                while (suffix.length() && textWidth(suffix) > maxWidth)
+                    suffix.remove(suffix.length() - 1);
+                while (line.length() && textWidth(line + suffix) > maxWidth)
+                {
+                    int end = line.length() - 1;
+                    while (end > 0 && (static_cast<uint8_t>(line[end]) & 0xC0) == 0x80)
+                        end--;
+                    line.remove(end);
+                }
+                line += suffix;
+            }
+            drawString(x, baseline, line, BASELINE, opacity);
+            baseline += this->currentFont.advance_y;
+        }
+    }
+
     void drawImageByUrl(String filePath, int x, int y, int width, int height)
     {
         if (!this->isJpegInited)

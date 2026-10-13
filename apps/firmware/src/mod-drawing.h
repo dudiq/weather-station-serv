@@ -121,6 +121,16 @@ public:
             int x = json["blocks"]["items"][d]["x"].as<int>();
             int y = json["blocks"]["items"][d]["y"].as<int>();
 
+        int width = json["blocks"]["items"][d]["width"] | 0;
+        if (width > 0)
+        {
+            this->displayEpd->drawWrappedText(x, y,
+                json["blocks"]["items"][d]["text"].as<String>(), width,
+                json["blocks"]["items"][d]["maxLines"] | 2,
+                json["blocks"]["items"][d]["opacity"] | 100);
+            return;
+        }
+
         this->displayEpd->drawString(
             x,
             y,

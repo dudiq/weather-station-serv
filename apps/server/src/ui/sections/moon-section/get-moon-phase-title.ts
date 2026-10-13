@@ -17,10 +17,10 @@ const ruLocal: LangPack = {
   First: 'Первая четверть',
   Full: 'Полнолуние',
   Last: 'Последняя четверть',
-  WaningCrescent: 'Убывающая, 1/4',
-  WaningGibbous: 'Убывающая, 3/4',
-  WaxingCrescent: 'Растущая, 1/4',
-  WaxingGibbous: 'Растущая, 3/4',
+  WaningCrescent: 'Убывающий серп',
+  WaningGibbous: 'Убывающая луна',
+  WaxingCrescent: 'Растущий серп',
+  WaxingGibbous: 'Растущая луна',
 }
 
 const localeMap: Record<string, LangPack> = {
