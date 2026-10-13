@@ -122,7 +122,7 @@ void processResults() {
   Serial.println("-draw json");
   const DynamicJsonDocument &json = modRequest.getJson();
   modDrawing.drawJson(json);
-  sectionStatusBar.drawStatusBar(580, EPD_HEIGHT - 12);
+  sectionStatusBar.drawStatusBar(json, EPD_WIDTH - 12, EPD_HEIGHT - 12);
 
   bool isDev = json["isDev"].as<bool>();
   if (isDev) {

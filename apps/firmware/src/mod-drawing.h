@@ -75,6 +75,8 @@ public:
         int totalTexts = json["blocks"]["total"].as<int>();
         for (int d = 0; d < totalTexts; d++)
         {
+            if (json["blocks"]["items"][d]["footer"].as<bool>())
+                continue;
             String type = json["blocks"]["items"][d]["type"].as<String>();
             if (type == "text")
             {

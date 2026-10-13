@@ -15,5 +15,6 @@ export type DeviceTextNode = {
 
   text: string
   opacity?: number // 0-100; defaults to 100, rendered as grayscale on white
+  footer?: boolean // firmware lays out footer blocks together with device status
   align: 'LEFT' | 'RIGHT' | 'CENTER' | 'V_CENTER' | 'H_CENTER' | 'BASELINE'
 }

@@ -65,6 +65,13 @@ public:
         epd_fill_rect(x, y, w, h, color, this->framebuffer);
     }
 
+    int textWidth(const String &text)
+    {
+        int x = 0, y = 0, x1, y1, width, height;
+        get_text_bounds(&this->currentFont, text.c_str(), &x, &y, &x1, &y1, &width, &height, NULL);
+        return x1 + width;
+    }
+
     void drawString(int x, int y, String text, alignment align, int opacity = 100)
     {
         opacity = constrain(opacity, 0, 100);

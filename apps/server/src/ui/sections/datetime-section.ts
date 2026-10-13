@@ -18,16 +18,8 @@ export function datetimeSection(): BlockResult {
       font: 't-sm',
       opacity: 50,
       align: 'BASELINE',
-      text: `${formatDate(now, 'HH:mm')} |`,
-    },
-    {
-      type: 'text',
-      x: 100,
-      y: 528,
-      font: 't-sm',
-      opacity: 50,
-      align: 'BASELINE',
-      text: `${formatDate(now, 'eee, dd MMM')} |`,
+      footer: true,
+      text: formatDate(now, 'HH:mm ; eee, dd MMM'),
     },
     {
       type: 'text',
@@ -36,7 +28,8 @@ export function datetimeSection(): BlockResult {
       font: 't-sm',
       opacity: 50,
       align: 'BASELINE',
-      text: `-> ${formatDate(nextWakeUp, 'HH:mm, dd MMM')} |`,
+      footer: true,
+      text: `-> ${formatDate(nextWakeUp, 'HH:mm, dd MMM')}`,
     },
   ]
 }

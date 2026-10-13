@@ -45,3 +45,4 @@ env.*.local
 .turbo/
 .pio/
 apps/firmware/firmware.ino.cpp
+.env

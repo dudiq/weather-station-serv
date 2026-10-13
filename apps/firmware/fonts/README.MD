@@ -71,8 +71,11 @@ python apps/firmware/fonts/build-forecast-icons.py
 Forecast days use this smaller font; current weather retains `meteo-md`.
 The system footer uses the smallest Inter size (`t-sm`) with `align: 'BASELINE'`
 at y=528 on the 960x540 display. All blocks share the same text baseline, regardless
-of glyph heights. The server sends separate time, date and next-update blocks. Firmware
-adds battery percent, voltage and Wi-Fi signal percent at x=580 before shutting Wi-Fi off.
+of glyph heights. The server sends a combined time/date block and a next-update block,
+marked with `footer: true`. Firmware appends battery percent, voltage and Wi-Fi signal
+percent before shutting Wi-Fi off. It joins the blocks with ` | `, measures the complete
+text in the actual font and aligns the line to the right with a 12-pixel margin.
+Footer block coordinates are superseded by this layout; ordinary blocks retain theirs.
 Signal strength uses a simple clamped scale: -100 dBm is 0%, -50 dBm is 100%.
 It is an approximate signal indicator, not a throughput measurement.
 All footer text uses `opacity: 50`, rendered as gray level 8/15 on white;

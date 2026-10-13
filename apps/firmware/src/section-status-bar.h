@@ -1,6 +1,7 @@
 #pragma once
 
 #include "enum.h"
+#include <ArduinoJson.h>
 
 class SectionStatusBar
 {
@@ -13,7 +14,7 @@ private:
 public:
     SectionStatusBar(ModDisplayEpd *displayEpd, ModBattery *modBattery, ModWifi *modWifi);
 
-    void drawStatusBar(int x, int y)
+    void drawStatusBar(const DynamicJsonDocument &json, int rightEdge, int y)
     {
         Serial.println("-status bar draw start");
         // get data
@@ -25,8 +26,21 @@ public:
         Serial.println("voltagePercent:" + String(voltagePercent));
 
         this->displayEpd->setFont("t-sm");
+        String footer;
+        for (JsonObjectConst block : json["blocks"]["items"].as<JsonArrayConst>())
+        {
+            if (!block["footer"].as<bool>())
+                continue;
+            if (footer.length())
+                footer += " | ";
+            footer += block["text"].as<String>();
+        }
         String status = String(voltagePercent) + "%, " + String(voltage, 1) + "v, WiFi " + String(wifiSignal) + "%";
-        this->displayEpd->drawString(x, y, status, BASELINE, 50);
+        if (footer.length())
+            footer += " | ";
+        footer += status;
+        int x = rightEdge - this->displayEpd->textWidth(footer);
+        this->displayEpd->drawString(x, y, footer, BASELINE, 50);
         Serial.println("-status bar draw done");
     }
 
