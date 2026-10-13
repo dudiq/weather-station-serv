@@ -12,27 +12,34 @@ class ModDisplayEpd
 private:
     /* data */
     GFXfont currentFont;
-    uint8_t *framebuffer;
+    uint8_t *framebuffer = nullptr;
+    bool isEpdInited = false;
     bool isJpegInited = false;
 
 public:
-    void prepareBuffer()
+    bool prepareBuffer()
     {
-
-        this->framebuffer = (uint8_t *)ps_calloc(sizeof(uint8_t), EPD_WIDTH * EPD_HEIGHT / 2);
         if (!this->framebuffer)
         {
-            Serial.println("alloc memory failed !!!");
-            while (1)
-                ;
+            this->framebuffer = (uint8_t *)ps_calloc(sizeof(uint8_t), EPD_WIDTH * EPD_HEIGHT / 2);
+            if (!this->framebuffer)
+            {
+                Serial.println("alloc memory failed !!!");
+                return false;
+            }
+        }
+        if (!this->isEpdInited)
+        {
+            epd_init();
+            this->isEpdInited = true;
         }
         memset(this->framebuffer, 0xFF, EPD_WIDTH * EPD_HEIGHT / 2);
-        epd_init();
-        epd_poweron();
+        return true;
     }
 
     void drawBuffer()
     {
+        epd_poweron();
         epd_clear();
         epd_draw_grayscale_image(epd_full_screen(), this->framebuffer);
         epd_poweroff_all();
@@ -104,7 +111,10 @@ public:
                 .width = width,
                 .height = height,
             };
+            // The JPEG library draws directly to the display, not to framebuffer.
+            epd_poweron();
             show_jpg_from_buff((uint8_t *)payload.c_str(), payload.length(), rect);
+            epd_poweroff_all();
         }
         else
         {

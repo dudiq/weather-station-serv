@@ -56,7 +56,10 @@ void setup()
   delay(1000);
   Serial.println("starting...");
 
-  modDisplayEpd.prepareBuffer();
+  if (!modDisplayEpd.prepareBuffer()) {
+    gotoSleep(WX_IMMEDIATE_SLEEP_SECONDS);
+    return;
+  }
 
   modBattery.readVoltage();
   float percentage = modBattery.currentPercent;
@@ -88,15 +91,18 @@ void setup()
   processResults();
 
   if (!WX_IS_DEV) {
-    DynamicJsonDocument json = modRequest.getJson();
+    const DynamicJsonDocument &json = modRequest.getJson();
     uint64_t sleepSeconds = json["sleepSeconds"].as<int>();
     gotoSleep(sleepSeconds);// 2 hours
   }
 }
 
 void loopDev() {
-  modDisplayEpd.prepareBuffer();
-  DynamicJsonDocument json = modRequest.getJson();
+  if (!modDisplayEpd.prepareBuffer()) {
+    gotoSleep(WX_IMMEDIATE_SLEEP_SECONDS);
+    return;
+  }
+  const DynamicJsonDocument &json = modRequest.getJson();
   uint64_t sleepSeconds = json["devSleep"].as<int>();
 
   delay(sleepSeconds);
@@ -114,7 +120,7 @@ void processResults() {
   sectionStatusBar.drawStatusBar(600, 20);
 
   Serial.println("-draw json");
-  DynamicJsonDocument json = modRequest.getJson();
+  const DynamicJsonDocument &json = modRequest.getJson();
   modDrawing.drawJson(json);
 
   bool isDev = json["isDev"].as<bool>();

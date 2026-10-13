@@ -1,6 +1,7 @@
 #pragma once
 
 #include "enum.h"
+#include <ArduinoJson.h>
 
 class ModDrawing
 {
@@ -56,15 +57,18 @@ public:
     {
         if (align == "V_CENTER")
             return V_CENTER;
+        if (align == "H_CENTER")
+            return H_CENTER;
         if (align == "CENTER")
             return CENTER;
         if (align == "RIGHT")
             return RIGHT;
         if (align == "LEFT")
             return LEFT;
+        return LEFT;
     }
 
-    void drawJson(DynamicJsonDocument json)
+    void drawJson(const DynamicJsonDocument &json)
     {
         int totalTexts = json["blocks"]["total"].as<int>();
         for (int d = 0; d < totalTexts; d++)
@@ -81,7 +85,7 @@ public:
         }
     }
 
-    void drawImage(DynamicJsonDocument json, int d)
+    void drawImage(const DynamicJsonDocument &json, int d)
     {
 
         this->displayEpd->drawImageByUrl(
@@ -92,7 +96,7 @@ public:
             json["blocks"]["items"][d]["height"].as<int>());
     }
 
-    void drawText(DynamicJsonDocument json, int d)
+    void drawText(const DynamicJsonDocument &json, int d)
     {
         String fontName = json["blocks"]["items"][d]["font"].as<String>();
         this->displayEpd->setFont(fontName);

@@ -15,7 +15,7 @@ class ModRequest
 {
 private:
 public:
-    DynamicJsonDocument getJson()
+    const DynamicJsonDocument &getJson() const
     {
         return jsonDoc;
     }
