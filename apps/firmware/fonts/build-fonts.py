@@ -1,4 +1,4 @@
-"""Build all firmware text sizes from one vendored Inter font."""
+"""Build all firmware text sizes from one vendored Nunito font."""
 import hashlib
 import json
 import os
@@ -11,7 +11,7 @@ import zlib
 from PIL import Image, ImageDraw
 
 ROOT = Path(__file__).resolve().parent
-SOURCE = ROOT / "source" / "Inter.ttf"
+SOURCE = ROOT / "source" / "Nunito.ttf"
 OUTPUT = ROOT.parent / "src" / "fonts"
 SIZES = {"textSm": 8, "textMd": 16, "textLg": 28, "textXl": 52}
 
@@ -55,12 +55,12 @@ def render_text(image, font, text, x, baseline):
 def main():
     metadata = json.loads((ROOT / "source" / "source.json").read_text(encoding="utf-8"))
     if hashlib.sha256(SOURCE.read_bytes()).hexdigest() != metadata["sha256"]:
-        raise ValueError("Inter source checksum does not match source.json")
+        raise ValueError("Nunito source checksum does not match source.json")
     environment = dict(os.environ, PYTHONIOENCODING="utf-8")
     generated = {}
     for name, size in SIZES.items():
         result = subprocess.run(
-            [sys.executable, str(ROOT / "fontconvert.py"), "--compress", name, str(size), str(SOURCE)],
+            [sys.executable, str(ROOT / "fontconvert.py"), "--compress", "--weight", "400", name, str(size), str(SOURCE)],
             capture_output=True, encoding="utf-8", env=environment, check=True,
         )
         header = "\n".join(line.rstrip() for line in result.stdout.splitlines()) + "\n"
@@ -82,7 +82,7 @@ def main():
     for name, baseline, text in rows:
         font = generated[name][1]
         top = max(font[character][4] for character in text)
-        labels.text((35, baseline - top - 24), f"Inter Regular / {name}", fill=110)
+        labels.text((35, baseline - top - 24), f"Nunito Regular / {name}", fill=110)
         render_text(preview, font, text, 35, baseline)
     preview.save(ROOT / "preview.png")
     print("Preview: fonts/preview.png (rendered from generated 4-bit glyphs)")

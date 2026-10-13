@@ -1,6 +1,6 @@
 ## Unified text font
 
-All firmware text uses **Inter Regular**, at the existing sizes:
+All firmware text uses **Nunito Regular**, at the existing sizes:
 
 | API name | Generated header | Size at 150 dpi |
 | --- | --- | --- |
@@ -28,9 +28,9 @@ The script checks the source SHA-256, generates and validates all four compresse
 Generated headers are committed, so normal firmware builds do not require Python
 font dependencies or a network font download.
 
-The vendored variable font uses its default Regular weight and text optical size.
-Source: [Inter](https://rsms.me/inter/), from the
-[pinned Google Fonts revision](https://github.com/google/fonts/tree/0b58fb370093f9a9f4ff785d94405710b79de67c/ofl/inter).
+The vendored variable font is explicitly rendered at Regular weight 400; its default
+weight is 200 and is not used. Source: [Nunito](https://github.com/googlefonts/nunito), from the
+[pinned Google Fonts revision](https://github.com/google/fonts/tree/8b0a1d0f5983c89bc2b93f1b5fb55f9e252744b5/ofl/nunito).
 `source/source.json` records provenance and checksum; `source/OFL.txt` contains the
 SIL Open Font License. The `.ttc` files and `text8.h` are legacy assets and are not
 used by the unified text build.
@@ -52,7 +52,7 @@ and `icons-preview.png`. It uses the existing Python requirements, verifies
 the vendored font checksum and validates the compressed glyphs.
 Source revision and license information are in `source/weather-icons/`.
 The server sends these as ordinary text blocks with `font: 'field-icons'`,
-followed by the value in Inter. No new rendering protocol is needed.
+followed by the value in Nunito. No new rendering protocol is needed.
 Moon icons and phase captions use their existing font and logic.
 
 Deploy firmware with `field-icons` before deploying the new server response:
@@ -75,7 +75,7 @@ Forecast cards are 304x184 pixels, with a centered date, an icon on the left and
 two temperatures on a common axis on the right. The two separators between three
 days are 1-pixel filled rectangles, centered vertically, 110 pixels high (60% of
 the card height rounded to pixels) and rendered with 50% opacity.
-The system footer uses the smallest Inter size (`t-sm`) with `align: 'BASELINE'`
+The system footer uses the smallest Nunito size (`t-sm`) with `align: 'BASELINE'`
 at y=528 on the 960x540 display. All blocks share the same text baseline, regardless
 of glyph heights. The server sends a combined time/date block and a next-update block,
 marked with `footer: true`. Firmware appends battery percent, voltage and Wi-Fi signal
@@ -91,9 +91,11 @@ not transparency over arbitrary backgrounds.
 ## Right-side details and moon
 
 Humidity/pressure and wind/cloud cover occupy two aligned rows in the upper-right
-area. Values use Inter `t-md`; icons use `field-icons`. Moon phase occupies a
-separate row below, with full localized phase names in `t-sm` at 50% opacity.
-Optional UV remains below the group; unavailable cloud cover and UV are omitted.
+area. Values use Nunito `t-md`; icons use `field-icons`. Moon phase occupies a
+separate row below at y=256, shifted towards the right edge (icon x=730, caption
+x=768), with full localized phase names in `t-sm` at 50% opacity.
+Optional UV occupies the third details row at x=510, y=176; unavailable cloud cover
+and UV are omitted. Details rows are 56 pixels apart.
 When a provider supplies no moon metadata (e.g. met.no), the server uses the existing
 approximate lunar-cycle calculation for both phase title and icon instead of hiding
 the moon. When a provider supplies a phase, both the title and icon use that phase.
@@ -103,7 +105,7 @@ Regenerate it with `python apps/firmware/fonts/build-moon.py`; the source, name 
 24 pt size are unchanged.
 
 Current weather occupies the left sector: separate icon/temperature positions,
-an optional feels-like row (including 0 degrees) and an Inter `t-md` description.
+an optional feels-like row (including 0 degrees) and an Nunito `t-md` description.
 Text blocks may specify `width` and `maxLines`; firmware wraps words using actual
 font metrics, truncating the last line with `...` when necessary. Current weather
 uses a 424-pixel width and two lines to avoid the details and forecast sections.

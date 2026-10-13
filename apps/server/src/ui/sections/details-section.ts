@@ -9,7 +9,7 @@ import {getLocale} from "@lw/interface/service/get-locale";
 const x = 510
 const y = 64
 const columnGap = 220
-const rowGap = 64
+const rowGap = 56
 
 type LangPack = Record<'pres_unit' | 'wind_unit', string>
 
@@ -47,8 +47,8 @@ export function detailsSection(): BlockResult {
     current.uvindex !== undefined ? fieldBlock({
       icon: 'uv',
       value: `${current.uvindex}`,
-      x: x + columnGap,
-      y: 264,
+      x,
+      y: y + rowGap * 2,
     }) : undefined,
     fieldBlock({
       icon: 'wind',

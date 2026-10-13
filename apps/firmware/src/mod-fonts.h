@@ -1,6 +1,6 @@
 #pragma once
 
-// All text sizes use Inter Regular; regenerate with fonts/build-fonts.py.
+// All text sizes use Nunito Regular; regenerate with fonts/build-fonts.py.
 #include "fonts/textSm.h"
 #include "fonts/textMd.h"
 #include "fonts/textLg.h"

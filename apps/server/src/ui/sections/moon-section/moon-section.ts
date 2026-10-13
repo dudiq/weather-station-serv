@@ -18,8 +18,8 @@ export function moonSection(): BlockResult {
     [
       {
         type: 'text',
-        x: 548,
-        y: 198,
+        x: 768,
+        y: 262,
         font: 't-sm',
         opacity: 50,
         align: 'BASELINE',
@@ -27,8 +27,8 @@ export function moonSection(): BlockResult {
       },
       {
         type: 'text',
-        x: 510,
-        y: 192,
+        x: 730,
+        y: 256,
         font: 'moon',
         align: 'CENTER',
         text: getMoonIcon(providerPhase, now),

@@ -13,6 +13,7 @@ parser.add_argument("size", type=int, help="font size to use.")
 parser.add_argument("fontstack", action="store", nargs='+', help="list of font files, ordered by descending priority.")
 parser.add_argument("--compress", dest="compress", action="store_true", help="compress glyph bitmaps.")
 parser.add_argument("--codepoints", help="comma-separated hexadecimal code points (overrides default text set).")
+parser.add_argument("--weight", type=float, help="weight for variable text fonts (wght axis).")
 args = parser.parse_args()
 
 GlyphProps = namedtuple("GlyphProps", ["width", "height", "advance_x", "left", "top", "compressed_size", "data_offset", "code_point"])
@@ -66,6 +67,12 @@ def norm_ceil(val):
     return int(math.ceil(val / (1 << 6)))
 
 for face in font_stack:
+    if args.weight is not None:
+        axes = face.get_variation_info().axes
+        weight_axis = next((axis for axis in axes if axis.tag == 'wght'), None)
+        if weight_axis is None or not weight_axis.minimum <= args.weight <= weight_axis.maximum:
+            raise ValueError("Requested weight is not supported by this font")
+        face.set_var_design_coords([args.weight if axis.tag == 'wght' else axis.default for axis in axes])
     # shift by 6 bytes, because sizes are given as 6-bit fractions
     # the display has about 150 dpi.
     face.set_char_size(size << 6, size << 6, 150, 150)
