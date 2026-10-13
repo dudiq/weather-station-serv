@@ -43,3 +43,5 @@ env.*.local
 *.example.ts
 *.cache.json
 .turbo/
+.pio/
+apps/firmware/firmware.ino.cpp

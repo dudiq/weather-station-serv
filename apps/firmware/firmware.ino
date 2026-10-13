@@ -33,8 +33,6 @@
 #include "src/mod-sleep.h"
 #include "src/section-status-bar.h"
 
-#include "config.h"
-
 WiFiClient wifiClient;   // wifi client object
 
 ModWifi modWifi;
@@ -61,7 +59,10 @@ void setup()
     return;
   }
 
+  // LilyGO's battery measurement circuit requires POWER_EN.
+  epd_poweron();
   modBattery.readVoltage();
+  epd_poweroff_all();
   float percentage = modBattery.currentPercent;
   
   Serial.println("percentage:" + String(percentage));
@@ -83,6 +84,7 @@ void setup()
   if (!handleRequestWeather()) {
     // TODO: add redraw screen and make next request after 20 min
     Serial.println("Cannot observer new data from server, going to sleep");
+    modWifi.disconnect();
     modDrawing.drawFetchError();
     gotoSleep(WX_IMMEDIATE_SLEEP_SECONDS);
     return;
@@ -132,6 +134,11 @@ void processResults() {
     modDrawing.drawDevGrid();
   }
 
+  // All network work (including JPEG downloads) is complete.
+  if (!WX_IS_DEV) {
+    modWifi.disconnect();
+  }
+
   Serial.println("-draw buffer");
   modDisplayEpd.drawBuffer();
 }
@@ -147,9 +154,11 @@ bool handleRequestWeather() {
   int ticks = 0;
   while (!isFetched && (ticks < WX_MAX_REQUEST_TICK))
   {
+    if (ticks > 0) {
+      delay(200);
+    }
     ticks++;
     Serial.print(".");
-    delay(200);
     isFetched = modRequest.fetchRequest(wifiClient);
   }
 

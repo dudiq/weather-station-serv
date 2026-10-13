@@ -1,4 +1,6 @@
 #pragma once
+#include <WiFi.h>
+#include "esp_sleep.h"
 #define uS_TO_S_FACTOR 1000000
 
 RTC_DATA_ATTR int bootCount = 0;
@@ -29,6 +31,12 @@ void wakeUp()
 }
 
 void gotoSleep(uint64_t sleepTimeSeconds) {    
+    if (WiFi.getMode() != WIFI_OFF) {
+        WiFi.setAutoReconnect(false);
+        WiFi.disconnect(false, false);
+        WiFi.mode(WIFI_OFF);
+    }
+    Serial.println("Awake time ms: " + String(millis()));
     Serial.println("Setup ESP32 to sleep for every " + String(sleepTimeSeconds) +" Seconds");            
     esp_sleep_enable_timer_wakeup(sleepTimeSeconds * uS_TO_S_FACTOR);
     esp_deep_sleep_start();

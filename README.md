@@ -15,6 +15,10 @@ or just run `docker compose up -d` with predefined keys in `.env` file
 
 ## How to run in device
 
+For the original ESP32 LilyGO T5 4.7, use the pinned PlatformIO build described
+in [the firmware README](apps/firmware/readme.md#reproducible-build).
+It also describes battery measurements and optimization candidates.
+
 - server should be started
 - copy /apps/firmware/env.example.h to /apps/firmware/env.h
 - define your settings in env.h file

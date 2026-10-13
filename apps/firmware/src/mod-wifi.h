@@ -15,46 +15,36 @@ public:
         return WiFi.status() == WL_CONNECTED;
     }
 
-    bool connect(char *ssid, char *password)
+    bool connect(const char *ssid, const char *password)
     {
-        bool isConnected = isConnected = WiFi.status() == WL_CONNECTED;
-        if (isConnected)
-        {
-            return true;
-        }
-        if (WiFi.waitForConnectResult(6000) == WL_CONNECTED)
+        if (checkConnected())
         {
             return true;
         }
 
+        WiFi.persistent(false); // Keep credentials in RAM; do not write flash on wakeup.
         WiFi.mode(WIFI_STA); // switch off AP
-        // WiFi.onEvent(this->WiFiEvent);
-        WiFi.setAutoConnect(true);
         WiFi.setAutoReconnect(true);
+        const uint32_t startedAt = millis();
+        const uint32_t timeoutMs = (uint32_t)MAX_WIFI_CONNECT_TICKS * 1000UL;
         WiFi.begin(ssid, password);
-        WiFi.persistent(true);
         Serial.println("Start connect to wifi:" + String(ssid));
 
-        int ticks = 0;
-        while (!isConnected && (ticks < MAX_WIFI_CONNECT_TICKS))
+        while (!checkConnected() && (uint32_t)(millis() - startedAt) < timeoutMs)
         {
-            delay(1000);
-            ticks++;
-            Serial.print(".");
-            isConnected = WiFi.status() == WL_CONNECTED;
+            delay(50);
         }
 
-        if (!isConnected)
+        if (!checkConnected())
         {
             Serial.println("Error: \nCan't connect to WiFi");
+            disconnect();
             return false;
         }
 
-        // this->rssiValue = WiFi.RSSI();
-        // WiFi.disconnect(false);
-
         Serial.println("");
         Serial.println("WiFi connected");
+        Serial.println("WiFi connect time ms: " + String(millis() - startedAt));
         Serial.println("IP address: ");
         Serial.println(WiFi.localIP());
 
@@ -63,7 +53,8 @@ public:
 
     void disconnect()
     {
-        WiFi.disconnect();
+        WiFi.setAutoReconnect(false);
+        WiFi.disconnect(false, false); // Preserve AP settings while stopping the connection.
         WiFi.mode(WIFI_OFF);
         Serial.println("WiFi switched Off ");
     }
