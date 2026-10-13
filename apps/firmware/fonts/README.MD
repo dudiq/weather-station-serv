@@ -1,3 +1,44 @@
+## Unified text font
+
+All firmware text uses **Inter Regular**, at the existing sizes:
+
+| API name | Generated header | Size at 150 dpi |
+| --- | --- | --- |
+| `t-sm` | `textSm.h` | 8 pt |
+| `t-md` | `textMd.h` | 16 pt |
+| `t-lg` | `textLg.h` | 28 pt |
+| `t-xl` | `textXl.h` | 52 pt |
+
+The icon fonts (`moon`, `meteo-md`, `meteo-xl`) remain separate.
+The text set includes ASCII, degree/plus-minus signs, Russian Cyrillic and Ё/ё
+(163 glyphs per size). Font names and server payloads remain compatible.
+Font metrics differ from Open Sans/Roboto Slab, so check spacing on the actual display.
+
+Rebuild from the repository root:
+
+```powershell
+python -m pip install -r apps/firmware/fonts/requirements.txt
+python apps/firmware/fonts/build-fonts.py
+```
+
+The script checks the source SHA-256, generates and validates all four compressed
+4-bit fonts, then writes directly to `apps/firmware/src/fonts/`.
+`preview.png` renders the generated bitmaps, rather than a desktop approximation.
+`create-font.bat` runs the same script, independently of the current directory.
+Generated headers are committed, so normal firmware builds do not require Python
+font dependencies or a network font download.
+
+The vendored variable font uses its default Regular weight and text optical size.
+Source: [Inter](https://rsms.me/inter/), from the
+[pinned Google Fonts revision](https://github.com/google/fonts/tree/0b58fb370093f9a9f4ff785d94405710b79de67c/ofl/inter).
+`source/source.json` records provenance and checksum; `source/OFL.txt` contains the
+SIL Open Font License. The `.ttc` files and `text8.h` are legacy assets and are not
+used by the unified text build.
+
+## Low-level fontconvert
+
+The following converter is available for custom fonts and icon work.
+
 fontconvert
 ============
 
