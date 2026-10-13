@@ -12,6 +12,7 @@ parser.add_argument("name", action="store", help="name of the font.")
 parser.add_argument("size", type=int, help="font size to use.")
 parser.add_argument("fontstack", action="store", nargs='+', help="list of font files, ordered by descending priority.")
 parser.add_argument("--compress", dest="compress", action="store_true", help="compress glyph bitmaps.")
+parser.add_argument("--codepoints", help="comma-separated hexadecimal code points (overrides default text set).")
 args = parser.parse_args()
 
 GlyphProps = namedtuple("GlyphProps", ["width", "height", "advance_x", "left", "top", "compressed_size", "data_offset", "code_point"])
@@ -55,6 +56,8 @@ intervals = [
      #(0x1F600, 0x1F680),
 ]
 
+if args.codepoints:
+    intervals = [(point, point) for point in sorted(set(int(value, 16) for value in args.codepoints.split(',')))]
 
 def norm_floor(val):
     return int(math.floor(val / (1 << 6)))

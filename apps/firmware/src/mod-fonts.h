@@ -5,6 +5,7 @@
 #include "fonts/textMd.h"
 #include "fonts/textLg.h"
 #include "fonts/textXl.h"
+#include "fonts/fieldIcons.h"
 
 #include "fonts/moon24.h"
 
@@ -21,6 +22,8 @@ GFXfont getFontByName(String fontName)
         return textLg;
     if (fontName == "t-xl")
         return textXl;
+    if (fontName == "field-icons")
+        return fieldIcons;
 
     if (fontName == "moon")
         return moon24;

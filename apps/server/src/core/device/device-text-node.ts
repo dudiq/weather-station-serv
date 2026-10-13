@@ -7,6 +7,7 @@ export type DeviceTextNode = {
     | 't-md' // for readable descriptions
     | 't-lg' // for sub header
     | 't-xl' // for header
+    | 'field-icons' // humidity, pressure, wind, cloud cover and UV
     | 'meteo-md' // meteo icons default
     | 'meteo-xl' // meteo icons for header
     | 'moon' // ordinary moon icons

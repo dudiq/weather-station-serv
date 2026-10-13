@@ -33,7 +33,7 @@ export function moonSection(): BlockResult {
       },
     ],
     fieldBlock({
-      label: 'облачность',
+      icon: 'cloud',
       value: `${current.cloudCover}%`,
       x: 820,
       y: 155,

@@ -1,17 +1,20 @@
 # Local weather device and server mono repository
 - Based on LilyGo EPD47 (esp32)
-- simple nodejs server
+- server running on Bun
 
 ## How to run server side
 - install node 20.x
 - install pnpm 9.15.x
+- install Bun 1.4.3 (version recorded in `.bun-version`)
 - define variables in apps/server/.env file
-- run `pnpm install`
+- run `pnpm install --frozen-lockfile`
 - run `pnpm build`
 - run `cd apps/server`
 - run `pnpm dev`
 
-or just run `docker compose up -d` with predefined keys in `.env` file
+or run `docker compose up -d --build` with predefined keys in `.env` file.
+The Docker runtime uses `oven/bun:1.4.3-alpine`; existing Node/pnpm build tools,
+dependency versions and workspace packages are unchanged.
 
 ## How to run in device
 
@@ -30,6 +33,8 @@ It also describes battery measurements and optimization candidates.
 
 
 ## Icons
+- Detail icons (humidity, pressure, wind, cloud cover, UV): Weather Icons by
+  Erik Flowers, https://github.com/erikflowers/weather-icons (SIL OFL 1.1).
 - Weather icons from https://github.com/kickstandapps/WeatherIcons
 - moon phases from http://www.mockfont.com/old/
 

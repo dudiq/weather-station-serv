@@ -1,21 +1,29 @@
 import type { BlockResult } from '../types'
 
+const icons = {
+  humidity: '\uf07a',
+  pressure: '\uf079',
+  wind: '\uf050',
+  cloud: '\uf041',
+  uv: '\uf00d',
+} as const
+
 type Args = {
-  label: string
+  icon: keyof typeof icons
   value: string
   x: number
   y: number
 }
 
-export function fieldBlock({ label, value, x, y }: Args): BlockResult {
+export function fieldBlock({ icon, value, x, y }: Args): BlockResult {
   return [
-    // label
+    // icon
     {
       type: 'text',
       x,
-      y,
-      font: 't-sm',
-      text: label,
+      y: y - 10,
+      font: 'field-icons',
+      text: icons[icon],
       align: 'RIGHT',
     },
     // value

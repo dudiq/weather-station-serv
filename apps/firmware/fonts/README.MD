@@ -35,6 +35,29 @@ Source: [Inter](https://rsms.me/inter/), from the
 SIL Open Font License. The `.ttc` files and `text8.h` are legacy assets and are not
 used by the unified text build.
 
+## Detail icons
+
+`field-icons` is a separate 16 pt Weather Icons font containing just five glyphs:
+
+| Field | Unicode |
+| --- | --- |
+| Humidity | U+F07A |
+| Pressure | U+F079 |
+| Wind | U+F050 |
+| Cloud cover | U+F041 |
+| UV (sun) | U+F00D |
+
+Run `python apps/firmware/fonts/build-icons.py` to regenerate `fieldIcons.h`
+and `icons-preview.png`. It uses the existing Python requirements, verifies
+the vendored font checksum and validates the compressed glyphs.
+Source revision and license information are in `source/weather-icons/`.
+The server sends these as ordinary text blocks with `font: 'field-icons'`,
+followed by the value in Inter. No new rendering protocol is needed.
+Moon icons and phase captions use their existing font and logic.
+
+Deploy firmware with `field-icons` before deploying the new server response:
+older firmware falls back to the text font and cannot render these glyphs.
+
 ## Low-level fontconvert
 
 The following converter is available for custom fonts and icon work.

@@ -35,23 +35,20 @@ RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm prune --prod --no-optio
 #     turbo build --filter=${PROJECT} && \
 #     pnpm --filter=${PROJECT} --prod deploy pruned
 
-FROM node:20-alpine AS runner
+FROM oven/bun:1.4.3-alpine AS runner
 ARG PROJECT
 ENV PROJECT=$PROJECT
 ARG APP
 ENV APP=$APP
 
+USER root
 RUN apk add --no-cache tini
-RUN addgroup -g 1001 -S nodejs && \
-    adduser -S nodejs -u 1001
 
 WORKDIR /app
-COPY --from=builder --chown=nodejs:nodejs /app .
+COPY --from=builder --chown=bun:bun /app .
 WORKDIR /app/apps/${APP}
 
-RUN ls -la
-
-USER nodejs
+USER bun
 
 ARG PORT=5050
 ENV PORT=${PORT}
@@ -60,4 +57,4 @@ EXPOSE ${PORT}
 
 ENTRYPOINT ["/sbin/tini", "--"]
 
-CMD ["node", "--max-old-space-size=3072", "dist/index"]
+CMD ["bun", "dist/index.js"]

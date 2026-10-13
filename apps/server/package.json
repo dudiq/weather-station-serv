@@ -5,9 +5,9 @@
   "scripts": {
     "clean:dist": "rimraf dist ./.turbo",
     "clean:node_modules": "rimraf ./node_modules",
-    "dev": "NODE_ENV=development dotenv-run -v -- tsx watch --inspect --clear-screen=false ./src/app.ts",
+    "dev": "dotenv-run -v -- bun --watch --inspect ./src/app.ts",
     "build": "dotenv-run -- tsup",
-    "start": "npm run build && node dist/index.js"
+    "start": "bun run build && dotenv-run -- bun dist/index.js"
   },
   "dependencies": {
     "@repo/build-version": "workspace:*",

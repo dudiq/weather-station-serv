@@ -10,21 +10,15 @@ const x = 500
 const y = 48
 const dx = 50
 
-type LangPack = Record<'hum' | 'pressure' | 'pres_unit' | 'wind' | 'wind_unit', string>
+type LangPack = Record<'pres_unit' | 'wind_unit', string>
 
 const titles: Record<'ru' | 'en', LangPack> = {
   ru: {
-    hum: 'влажность',
-    pressure: 'давление',
     pres_unit: 'мм рт.',
-    wind: 'ветер',
     wind_unit: 'м/с'
   },
   en: {
-    hum: 'humidity',
-    pressure: 'pressure',
     pres_unit: 'mm pt.',
-    wind: 'wind',
     wind_unit: 'm/s'
   }
 }
@@ -38,25 +32,25 @@ export function detailsSection(): BlockResult {
 
   return render(
     fieldBlock({
-      label: `${usedTitles.hum}:`,
+      icon: 'humidity',
       value: `${current.hum.outdoor}%`,
       x,
       y: y,
     }),
     fieldBlock({
-      label: `${usedTitles.pressure}:`,
+      icon: 'pressure',
       value: `${current.pressure.value}${usedTitles.pres_unit}`,
       x,
       y: y + dx,
     }),
     current.uvindex !== undefined ? fieldBlock({
-      label: 'UV:',
+      icon: 'uv',
       value: `${current.uvindex} `, // todo add type
       x,
       y: y + dx * 2,
     }) : undefined,
     fieldBlock({
-      label: `${usedTitles.wind}`,
+      icon: 'wind',
       value: `${Math.floor(current.wind.speed * 10) / 10} ${usedTitles.wind_unit}`, // todo add direction
       x,
       y: y + dx * 3,
