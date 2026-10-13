@@ -9,7 +9,7 @@ export type DeviceTextNode = {
     | 't-xl' // for header
     | 'field-icons' // humidity, pressure, wind, cloud cover and UV
     | 'meteo-md' // meteo icons default
-    | 'meteo-sm' // forecast icons, 8 pixels smaller at maximum size
+    | 'meteo-sm' // forecast icons, maximum glyph size 71 px
     | 'meteo-xl' // meteo icons for header
     | 'moon' // ordinary moon icons
 

@@ -61,14 +61,20 @@ older firmware falls back to the text font and cannot render these glyphs.
 ## Forecast icons and system footer
 
 `meteo-sm` uses `meteoconsSmall.h`, resampled from the existing `meteocons42.h`
-with preserved proportions. The largest glyph dimension is reduced by exactly
-8 pixels (89 to 81). Regenerate with:
+with preserved proportions. The largest glyph dimension is 71 pixels: 10 pixels
+smaller than the previous 81-pixel version (18 pixels below the original 89).
+Glyph origins are normalized and advances include a gap, so different icons center
+consistently and consecutive symbols do not overlap. Regenerate with:
 
 ```powershell
 python apps/firmware/fonts/build-forecast-icons.py
 ```
 
 Forecast days use this smaller font; current weather retains `meteo-md`.
+Forecast cards are 304x184 pixels, with a centered date, an icon on the left and
+two temperatures on a common axis on the right. The two separators between three
+days are 1-pixel filled rectangles, centered vertically, 110 pixels high (60% of
+the card height rounded to pixels) and rendered with 50% opacity.
 The system footer uses the smallest Inter size (`t-sm`) with `align: 'BASELINE'`
 at y=528 on the 960x540 display. All blocks share the same text baseline, regardless
 of glyph heights. The server sends a combined time/date block and a next-update block,
@@ -81,6 +87,17 @@ It is an approximate signal indicator, not a throughput measurement.
 All footer text uses `opacity: 50`, rendered as gray level 8/15 on white;
 omitting opacity preserves the normal black text. This is grayscale rendering,
 not transparency over arbitrary backgrounds.
+
+## Right-side details and moon
+
+Humidity/pressure and wind/cloud cover occupy two aligned rows in the upper-right
+area. Values use Inter `t-md`; icons use `field-icons`. Moon phase occupies a
+separate row below, with full localized phase names. Optional UV remains below
+the group; unavailable cloud cover, UV or moon data does not produce placeholders.
+
+The existing `moon24` font includes the `0` new-moon symbol as well as `@` and A-Z.
+Regenerate it with `python apps/firmware/fonts/build-moon.py`; the source, name and
+24 pt size are unchanged.
 
 ## Low-level fontconvert
 

@@ -90,7 +90,9 @@ public:
 
         // int cursor_y = y + h;
         int cursor_y = align == BASELINE ? y : y + h;
-        if (align == CENTER || align == V_CENTER)
+        if (align == CENTER)
+            cursor_y = y + h / 2;
+        else if (align == V_CENTER)
             cursor_y = cursor_y + h / 2;
 
         if (opacity == 100)

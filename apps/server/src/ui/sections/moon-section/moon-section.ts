@@ -1,8 +1,6 @@
 import { routerAsyncStorage } from '@lw/interface/service/router-async-storage'
 import { render } from '@lw/interface/system/render'
 
-import { fieldBlock } from '../../kit/field-block'
-
 import { getMoonIcon } from './get-moon-icon'
 import { getMoonPhaseTitle } from './get-moon-phase-title'
 
@@ -11,32 +9,29 @@ import type { BlockResult } from '../../types'
 export function moonSection(): BlockResult {
   const store = routerAsyncStorage.getStore()
   if (!store) return []
-  const { current, forecast } = store.weather
+  const { forecast } = store.weather
+  const moon = forecast[0]?.moon
+  if (!moon) return []
 
   return render(
     [
-      forecast[0].moon ? {
-        type: 'text',
-        x: 795,
-        y: 84,
-        font: 't-md',
-        align: 'LEFT',
-        text: getMoonPhaseTitle(forecast[0].moon.phase),
-      } : undefined,
       {
         type: 'text',
-        x: 725,
-        y: 84,
+        x: 548,
+        y: 198,
+        font: 't-sm',
+        opacity: 50,
+        align: 'BASELINE',
+        text: getMoonPhaseTitle(moon.phase),
+      },
+      {
+        type: 'text',
+        x: 510,
+        y: 192,
         font: 'moon',
-        align: 'LEFT',
+        align: 'CENTER',
         text: getMoonIcon(),
       },
-    ],
-    fieldBlock({
-      icon: 'cloud',
-      value: `${current.cloudCover}%`,
-      x: 820,
-      y: 155,
-    })
+    ]
   )
 }

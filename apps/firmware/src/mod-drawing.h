@@ -86,6 +86,18 @@ public:
             {
                 this->drawImage(json, d);
             }
+            if (type == "rect")
+            {
+                JsonObjectConst block = json["blocks"]["items"][d];
+                int opacity = constrain(block["opacity"] | 100, 0, 100);
+                int width = block["width"].as<int>();
+                int height = block["height"].as<int>();
+                if (opacity > 0 && width > 0 && height > 0)
+                {
+                    uint8_t color = ((15 * (100 - opacity) + 50) / 100) * 17;
+                    this->displayEpd->fillRect(block["x"].as<int>(), block["y"].as<int>(), width, height, color);
+                }
+            }
         }
     }
 

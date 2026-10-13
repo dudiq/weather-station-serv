@@ -2,25 +2,25 @@ import type { MoonPhaseEntity } from '@lw/core/value-objects/weather-forecast.va
 
 type LangPack = Record<MoonPhaseEntity, string>
 const enLocal: LangPack = {
-  New: 'New',
-  First: 'First Q',
-  Full: 'Full',
-  Last: 'Last Q',
-  WaningCrescent: 'Waning C',
-  WaningGibbous: 'Waninng G',
-  WaxingCrescent: 'Wax C',
-  WaxingGibbous: 'Wax G',
+  New: 'New moon',
+  First: 'First quarter',
+  Full: 'Full moon',
+  Last: 'Last quarter',
+  WaningCrescent: 'Waning crescent',
+  WaningGibbous: 'Waning gibbous',
+  WaxingCrescent: 'Waxing crescent',
+  WaxingGibbous: 'Waxing gibbous',
 }
 
 const ruLocal: LangPack = {
-  New: 'Новая',
-  First: 'Первая',
-  Full: 'Полная',
-  Last: 'Посленяя',
-  WaningCrescent: '1/4 уб',
-  WaningGibbous: '3/4 уб',
-  WaxingCrescent: '1/4 во',
-  WaxingGibbous: '3/4 во',
+  New: 'Новолуние',
+  First: 'Первая четверть',
+  Full: 'Полнолуние',
+  Last: 'Последняя четверть',
+  WaningCrescent: 'Убывающая, 1/4',
+  WaningGibbous: 'Убывающая, 3/4',
+  WaxingCrescent: 'Растущая, 1/4',
+  WaxingGibbous: 'Растущая, 3/4',
 }
 
 const localeMap: Record<string, LangPack> = {

@@ -21,19 +21,19 @@ export function fieldBlock({ icon, value, x, y }: Args): BlockResult {
     {
       type: 'text',
       x,
-      y: y - 10,
+      y,
       font: 'field-icons',
       text: icons[icon],
-      align: 'RIGHT',
+      align: 'CENTER',
     },
     // value
     {
       type: 'text',
-      x: x + 10,
-      y: y - 10,
+      x: x + 28,
+      y: y + 12,
       font: 't-md',
       text: `${value}`,
-      align: 'LEFT',
+      align: 'BASELINE',
     },
   ]
 }

@@ -9,6 +9,7 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parent
 OUTPUT = ROOT.parent / 'src' / 'fonts'
 NAME = 'meteoconsSmall'
+REDUCTION = 18 # Original 89 px -> 71 px; 10 px smaller than the previous 81 px.
 
 
 def main():
@@ -16,7 +17,7 @@ def main():
     source = (OUTPUT / 'meteocons42.h').read_text(encoding='utf-8')
     glyphs = helpers['glyphs'](source)
     original_size = max(max(glyph[0], glyph[1]) for glyph in glyphs.values())
-    scale = (original_size - 8) / original_size
+    scale = (original_size - REDUCTION) / original_size
     bitmaps = bytearray()
     props = []
     for character, (width, height, advance, left, top, packed) in glyphs.items():
@@ -38,7 +39,8 @@ def main():
                         value |= (image.getpixel((x + 1, y)) >> 4) << 4
                     packed.append(value)
         compressed = zlib.compress(bytes(packed))
-        props.append((width, height, round(advance * scale), round(left * scale), round(top * scale), len(compressed), len(bitmaps)))
+        # Tight glyph origin: center by visible bounds, not legacy font bearings.
+        props.append((width, height, max(round(advance * scale), width + 4), 0, height, len(compressed), len(bitmaps)))
         bitmaps.extend(compressed)
     intervals = source.split('Intervals[] = {', 1)[1].split('};', 1)[0]
     metrics = source.split('const GFXfont meteocons42 = {', 1)[1].split('};', 1)[0]
@@ -54,9 +56,9 @@ def main():
                   *[f'    {round(value * scale)},' for value in (line_height, ascender, descender)], '};'])
     header = '\n'.join(lines) + '\n'
     result = helpers['glyphs'](header)
-    assert max(max(glyph[0], glyph[1]) for glyph in result.values()) == original_size - 8
+    assert max(max(glyph[0], glyph[1]) for glyph in result.values()) == original_size - REDUCTION
     (OUTPUT / f'{NAME}.h').write_text(header, encoding='utf-8')
-    print(f'{NAME}: {len(result)} glyphs, maximum size {original_size} -> {original_size - 8} px')
+    print(f'{NAME}: {len(result)} glyphs, maximum size {original_size} -> {original_size - REDUCTION} px')
 
 
 if __name__ == '__main__':
