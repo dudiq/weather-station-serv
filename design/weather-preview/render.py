@@ -179,6 +179,7 @@ def render():
     put_text(image,SAMPLE['phase'],'sm',768,256-phase.height//2,gray=136)
 
     d=ImageDraw.Draw(image)
+    d.line((24,304,935,304),fill=136,width=1)
     for index,(day,high,low,weather) in enumerate([
         ('чтв, 15','-8°','-14°','sun-cloud'),('птн, 16','-5°','-10°','snow'),
         ('сбт, 17','-2°','-7°','rain'),

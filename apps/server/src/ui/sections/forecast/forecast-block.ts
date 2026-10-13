@@ -16,6 +16,17 @@ export function forecastBlock(): BlockResult {
   const days = store.weather.forecast.slice(0, MAX_DAYS)
   const blocks: BlockResult = []
 
+  if (days.length > 0) {
+    blocks.push({
+      type: 'rect',
+      x: START_X,
+      y: START_Y - 8,
+      width: BLOCK_WIDTH * MAX_DAYS,
+      height: 1,
+      opacity: 50,
+    })
+  }
+
   days.forEach((item, index) => {
     const left = START_X + index * BLOCK_WIDTH
     blocks.push(
