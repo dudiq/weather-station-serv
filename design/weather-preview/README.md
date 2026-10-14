@@ -1,30 +1,18 @@
 # Weather preview — 960 × 540
 
-Изолированные макеты для сравнения. Код сервера, шрифты и сборка прошивки не меняются.
-Показания иллюстративные; одинаковый набор записан в `sample.json`.
+Design mockup using sample readings from `sample.json`. The preview uses Nunito
+Regular, antialiased icons, and 16 shades of gray. It shows current weather on the
+left, weather metrics and the moon on the right, and a three-day forecast below.
+The icons are sketches, not a complete weather icon set.
 
-`preview.png` — единый текстовый шрифт Nunito Regular во всех размерах:
-17, 32, 56 и 104 px. Иконки сглаженные, без пиксельного масштабирования.
+The mockup is for visual review only and is not integrated with the firmware or server.
 
-Сохранена нынешняя компоновка: текущая погода слева, показатели и луна справа,
-три дня снизу и системная строка по правому краю. UV сгруппирован с погодными
-показателями, а луна расположена отдельным блоком ниже них.
-Иконки — эскизы набора, а не полный атлас всех погодных состояний.
-
-Название фазы луны отображается мелким шрифтом с opacity 50%.
-Второстепенный текст и разделители используют серый уровень 8/15.
-Макет приведён к 16 оттенкам серого.
-Описание ограничено двумя строками, как на устройстве.
-
-Перегенерация из корня репозитория с установленным Pillow:
+To regenerate `preview.png`, install Pillow and run from the repository root:
 
 ```powershell
 python design/weather-preview/render.py
 ```
 
-Nunito взят из [Google Fonts](https://github.com/google/fonts/tree/main/ofl/nunito),
-используется с весом 400.
-Лицензия и данные источника сохранены в `source/nunito/OFL.txt` и `source/nunito/source.json`.
-
-Макеты предназначены для оценки оформления. Они не подключены к PlatformIO,
-генераторам шрифтов прошивки или серверному ответу и не загружаются на устройство.
+Nunito is from [Google Fonts](https://github.com/google/fonts/tree/main/ofl/nunito).
+Its license and source metadata are in `source/nunito/OFL.txt` and
+`source/nunito/source.json`.

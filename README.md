@@ -2,6 +2,12 @@
 - Based on LilyGo EPD47 (esp32)
 - server running on Bun
 
+## Design preview
+
+![Weather display design preview](design/weather-preview/preview.png)
+
+See [the preview README](design/weather-preview/README.md) for details and regeneration instructions.
+
 ## How to run server side
 - install node 20.x
 - install pnpm 9.15.x
