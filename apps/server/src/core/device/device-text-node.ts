@@ -7,6 +7,9 @@ export type DeviceTextNode = {
     | 't-md' // for readable descriptions
     | 't-lg' // for sub header
     | 't-xl' // for header
+    | 'temp-md' // temperature: Semibold digits, Regular degree and signs
+    | 'temp-lg'
+    | 'temp-xl'
     | 'field-icons' // humidity, pressure, wind, cloud cover and UV
     | 'meteo-md' // meteo icons default
     | 'meteo-sm' // forecast icons, maximum glyph size 71 px

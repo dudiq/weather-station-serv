@@ -21,7 +21,7 @@ export function moonSection(): BlockResult {
         x: 768,
         y: 262,
         font: 't-sm',
-        opacity: 50,
+        opacity: 65,
         align: 'BASELINE',
         text: getMoonPhaseTitle(phase),
       },

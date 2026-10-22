@@ -14,7 +14,7 @@ export function currentSection(): BlockResult {
       type: 'text',
       x: 300,
       y: 104,
-      font: 't-xl',
+      font: 'temp-xl',
       align: 'CENTER',
       text: `${Math.floor(current.temp.current)}°`,
     },
@@ -41,11 +41,11 @@ export function currentSection(): BlockResult {
     blocks.push(
       {
         type: 'text', x: 180, y: 188, font: 't-sm',
-        align: 'BASELINE', opacity: 50,
+        align: 'BASELINE', opacity: 65,
         text: getLocale() === 'ru' ? 'Ощущается как' : 'Feels like',
       },
       {
-        type: 'text', x: 340, y: 188, font: 't-md',
+        type: 'text', x: 340, y: 188, font: 'temp-md',
         align: 'BASELINE', text: `${Math.floor(current.temp.feelsLike)}°`,
       }
     )

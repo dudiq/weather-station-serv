@@ -1,6 +1,6 @@
 ## Unified text font
 
-All firmware text uses **Nunito Regular**, at the existing sizes:
+Ordinary firmware text uses **Nunito Regular**, at the existing sizes:
 
 | API name | Generated header | Size at 150 dpi |
 | --- | --- | --- |
@@ -8,6 +8,12 @@ All firmware text uses **Nunito Regular**, at the existing sizes:
 | `t-md` | `textMd.h` | 16 pt |
 | `t-lg` | `textLg.h` | 28 pt |
 | `t-xl` | `textXl.h` | 52 pt |
+
+Temperatures use `temp-md`, `temp-lg` and `temp-xl` at the same 16/28/52 pt
+sizes. Their compact fonts contain only space, plus/minus signs, digits and the
+degree symbol. Only digits use Nunito Semibold (600); signs and degrees retain
+Regular (400). Other text and numbers retain their existing fonts.
+Deploy firmware with these fonts before deploying the updated server response.
 
 The icon fonts (`moon`, `meteo-md`, `meteo-xl`) remain separate.
 The text set includes ASCII, degree/plus-minus signs, Russian Cyrillic and Ё/ё
@@ -29,7 +35,8 @@ Generated headers are committed, so normal firmware builds do not require Python
 font dependencies or a network font download.
 
 The vendored variable font is explicitly rendered at Regular weight 400; its default
-weight is 200 and is not used. Source: [Nunito](https://github.com/googlefonts/nunito), from the
+weight is 200 and is not used. Temperature digits are explicitly rendered at 600.
+Source: [Nunito](https://github.com/googlefonts/nunito), from the
 [pinned Google Fonts revision](https://github.com/google/fonts/tree/8b0a1d0f5983c89bc2b93f1b5fb55f9e252744b5/ofl/nunito).
 `source/source.json` records provenance and checksum; `source/OFL.txt` contains the
 SIL Open Font License. The `.ttc` files and `text8.h` are legacy assets and are not
@@ -74,7 +81,7 @@ Forecast days use this smaller font; current weather retains `meteo-md`.
 Forecast cards are 304x184 pixels, with a centered date, an icon on the left and
 two temperatures on a common axis on the right. The two separators between three
 days are 1-pixel filled rectangles, centered vertically, 110 pixels high (60% of
-the card height rounded to pixels) and rendered with 50% opacity.
+the card height rounded to pixels) and rendered with 65% opacity.
 The system footer uses the smallest Nunito size (`t-sm`) with `align: 'BASELINE'`
 at y=528 on the 960x540 display. All blocks share the same text baseline, regardless
 of glyph heights. The server sends a combined time/date block and a next-update block,
@@ -84,7 +91,7 @@ text in the actual font and aligns the line to the right with a 12-pixel margin.
 Footer block coordinates are superseded by this layout; ordinary blocks retain theirs.
 Signal strength uses a simple clamped scale: -100 dBm is 0%, -50 dBm is 100%.
 It is an approximate signal indicator, not a throughput measurement.
-All footer text uses `opacity: 50`, rendered as gray level 8/15 on white;
+All footer text uses `opacity: 65`, rendered as gray level 5/15 on white;
 omitting opacity preserves the normal black text. This is grayscale rendering,
 not transparency over arbitrary backgrounds.
 
@@ -93,7 +100,7 @@ not transparency over arbitrary backgrounds.
 Humidity/pressure and wind/cloud cover occupy two aligned rows in the upper-right
 area. Values use Nunito `t-md`; icons use `field-icons`. Moon phase occupies a
 separate row below at y=256, shifted towards the right edge (icon x=730, caption
-x=768), with full localized phase names in `t-sm` at 50% opacity.
+x=768), with full localized phase names in `t-sm` at 65% opacity.
 Optional UV occupies the third details row at x=510, y=176; unavailable cloud cover
 and UV are omitted. Details rows are 56 pixels apart.
 When a provider supplies no moon metadata (e.g. met.no), the server uses the existing

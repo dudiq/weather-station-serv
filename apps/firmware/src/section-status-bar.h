@@ -40,7 +40,7 @@ public:
             footer += " | ";
         footer += status;
         int x = rightEdge - this->displayEpd->textWidth(footer);
-        this->displayEpd->drawString(x, y, footer, BASELINE, 50);
+        this->displayEpd->drawString(x, y, footer, BASELINE, 65);
         Serial.println("-status bar draw done");
     }
 

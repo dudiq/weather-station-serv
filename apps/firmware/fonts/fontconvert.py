@@ -14,6 +14,7 @@ parser.add_argument("fontstack", action="store", nargs='+', help="list of font f
 parser.add_argument("--compress", dest="compress", action="store_true", help="compress glyph bitmaps.")
 parser.add_argument("--codepoints", help="comma-separated hexadecimal code points (overrides default text set).")
 parser.add_argument("--weight", type=float, help="weight for variable text fonts (wght axis).")
+parser.add_argument("--digit-weight", type=float, help="override weight for digits 0-9 only.")
 args = parser.parse_args()
 
 GlyphProps = namedtuple("GlyphProps", ["width", "height", "advance_x", "left", "top", "compressed_size", "data_offset", "code_point"])
@@ -91,6 +92,12 @@ def load_glyph(code_point):
         face = font_stack[face_index]
         glyph_index = face.get_char_index(code_point)
         if glyph_index > 0:
+            if args.digit_weight is not None:
+                face.set_var_design_coords([
+                    (args.digit_weight if ord('0') <= code_point <= ord('9') else args.weight)
+                    if axis.tag == 'wght' else axis.default
+                    for axis in face.get_variation_info().axes
+                ])
             face.load_glyph(glyph_index, freetype.FT_LOAD_RENDER)
             return face
             break

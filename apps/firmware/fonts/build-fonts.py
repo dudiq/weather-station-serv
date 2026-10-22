@@ -14,6 +14,7 @@ ROOT = Path(__file__).resolve().parent
 SOURCE = ROOT / "source" / "Nunito.ttf"
 OUTPUT = ROOT.parent / "src" / "fonts"
 SIZES = {"textSm": 8, "textMd": 16, "textLg": 28, "textXl": 52}
+TEMPERATURE_SIZES = {"temperatureMd": 16, "temperatureLg": 28, "temperatureXl": 52}
 
 
 def glyphs(header):
@@ -58,9 +59,13 @@ def main():
         raise ValueError("Nunito source checksum does not match source.json")
     environment = dict(os.environ, PYTHONIOENCODING="utf-8")
     generated = {}
-    for name, size in SIZES.items():
+    for name, size in (SIZES | TEMPERATURE_SIZES).items():
+        options = []
+        if name in TEMPERATURE_SIZES:
+            options = ["--digit-weight", "600", "--codepoints",
+                       ','.join(f'{point:X}' for point in [32, 43, 45, *range(48, 58), 176])]
         result = subprocess.run(
-            [sys.executable, str(ROOT / "fontconvert.py"), "--compress", "--weight", "400", name, str(size), str(SOURCE)],
+            [sys.executable, str(ROOT / "fontconvert.py"), "--compress", "--weight", "400", *options, name, str(size), str(SOURCE)],
             capture_output=True, encoding="utf-8", env=environment, check=True,
         )
         header = "\n".join(line.rstrip() for line in result.stdout.splitlines()) + "\n"
@@ -71,18 +76,22 @@ def main():
         (OUTPUT / f"{name}.h").write_bytes(header.encode("utf-8"))
         print(f"{name}: {len(font)} glyphs, {len(header.encode('utf-8'))} header bytes")
 
-    preview = Image.new("L", (1200, 640), 255)
+    preview = Image.new("L", (1200, 1080), 255)
     labels = ImageDraw.Draw(preview)
     rows = [
         ("textSm", 60, "13.10.2026  |  100%  4.2v"),
         ("textMd", 155, "Вторник, 13 октября  |  Tuesday"),
         ("textLg", 300, "Ветер 3 м/с  |  +12° / -3°"),
         ("textXl", 520, "+12°  -3°  100%"),
+        ("temperatureMd", 660, "+12°  -3°  0°"),
+        ("temperatureLg", 800, "+12°  -3°  0°"),
+        ("temperatureXl", 1010, "+12°  -3°  0°"),
     ]
     for name, baseline, text in rows:
         font = generated[name][1]
         top = max(font[character][4] for character in text)
-        labels.text((35, baseline - top - 24), f"Nunito Regular / {name}", fill=110)
+        weight = "Semibold digits" if name in TEMPERATURE_SIZES else "Regular"
+        labels.text((35, baseline - top - 24), f"Nunito {weight} / {name}", fill=110)
         render_text(preview, font, text, 35, baseline)
     preview.save(ROOT / "preview.png")
     print("Preview: fonts/preview.png (rendered from generated 4-bit glyphs)")

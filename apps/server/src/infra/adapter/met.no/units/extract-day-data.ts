@@ -28,8 +28,8 @@ export function extractDayData(timeseries: TTimeseries[]) {
   }
 
   for (const [monthDay, items] of Object.entries(grouped)) {
-    let tempMin = items[0]?.data.instant.details.air_temperature || -100
-    let tempMax = items[0]?.data.instant.details.air_temperature || 100
+    let tempMin = items[0].data.instant.details.air_temperature
+    let tempMax = tempMin
     items.forEach(item => {
       if (item.data.instant.details.air_temperature < tempMin) {
         tempMin = item.data.instant.details.air_temperature

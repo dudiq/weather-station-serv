@@ -23,7 +23,7 @@ export function forecastBlock(): BlockResult {
       y: START_Y - 8,
       width: BLOCK_WIDTH * MAX_DAYS,
       height: 1,
-      opacity: 50,
+      opacity: 65,
     })
   }
 
@@ -50,7 +50,7 @@ export function forecastBlock(): BlockResult {
         type: 'text',
         x: left + 214,
         y: START_Y + 88,
-        font: 't-lg',
+        font: 'temp-lg',
         text: `${Math.floor(item.temp.max)}°`,
         align: 'CENTER',
       },
@@ -58,7 +58,7 @@ export function forecastBlock(): BlockResult {
         type: 'text',
         x: left + 214,
         y: START_Y + 152,
-        font: 't-lg',
+        font: 'temp-lg',
         text: `${Math.floor(item.temp.min)}°`,
         align: 'CENTER',
       }
@@ -71,7 +71,7 @@ export function forecastBlock(): BlockResult {
         y: START_Y + Math.round((BLOCK_HEIGHT - height) / 2),
         width: 1,
         height,
-        opacity: 50,
+        opacity: 65,
       })
     }
   })

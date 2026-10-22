@@ -1,10 +1,14 @@
 #pragma once
 
-// All text sizes use Nunito Regular; regenerate with fonts/build-fonts.py.
+// Nunito Regular; temperature fonts use Semibold digits only.
+// Regenerate with fonts/build-fonts.py.
 #include "fonts/textSm.h"
 #include "fonts/textMd.h"
 #include "fonts/textLg.h"
 #include "fonts/textXl.h"
+#include "fonts/temperatureMd.h"
+#include "fonts/temperatureLg.h"
+#include "fonts/temperatureXl.h"
 #include "fonts/fieldIcons.h"
 
 #include "fonts/moon24.h"
@@ -23,6 +27,12 @@ GFXfont getFontByName(String fontName)
         return textLg;
     if (fontName == "t-xl")
         return textXl;
+    if (fontName == "temp-md")
+        return temperatureMd;
+    if (fontName == "temp-lg")
+        return temperatureLg;
+    if (fontName == "temp-xl")
+        return temperatureXl;
     if (fontName == "field-icons")
         return fieldIcons;
 
